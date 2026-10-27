@@ -1,8 +1,10 @@
 import React, { Suspense } from "react";
+import { connection } from "next/server";
 import { getEstadoCaja } from "@/server/actions";
 import { PosLayout } from "@/components/pos/pos-layout";
 
 async function PosContainer() {
+  await connection();
   const data = await getEstadoCaja();
 
   if (!data.success || !data.turno) {
@@ -13,14 +15,14 @@ async function PosContainer() {
           <h2 className="text-xl font-black text-amber-400 mb-2">
             Iniciando POS Eben Ezer
           </h2>
-          <p className="text-xs text-slate-400 mb-4">
-            Preparando conexión con la base de datos o turno inicial.
+          <p className="text-xs text-slate-400 mb-2">
+            {data.error || "Preparando conexión con la base de datos o turno inicial."}
           </p>
           <a
             href="/"
-            className="inline-block bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition"
+            className="inline-block bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition mt-2 cursor-pointer"
           >
-            Recargar Sistema
+            Reintentar Conexión
           </a>
         </div>
       </div>
