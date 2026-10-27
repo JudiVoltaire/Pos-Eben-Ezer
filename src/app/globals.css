@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --canvas: #16181d;
+  --surface: #21252d;
+  --panel: #1c1f26;
+  --border-subtle: #2e3440;
+  --text-primary: #e5e9f0;
+  --text-secondary: #94a3b8;
+  
+  --salvia: #10b981;
+  --acero: #0284c7;
+  --ocre: #d97706;
+  --terracota: #e11d48;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--canvas);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* Tipografía numérica tabular para lectura instantánea sin fatiga */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Clases semánticas anti-fatiga visual */
+.bg-canvas {
+  background-color: #16181d;
+}
+
+.bg-surface {
+  background-color: #21252d;
+}
+
+.bg-ticket-panel {
+  background-color: #1c1f26;
+}
+
+.border-subtle {
+  border-color: #2e3440;
+}
+
+.text-bone {
+  color: #e5e9f0;
+}
+
+.text-muted {
+  color: #94a3b8;
+}
+
+/* Ocultar scrollbars manteniendo scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

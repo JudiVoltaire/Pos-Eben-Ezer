@@ -1,25 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { TopBar } from "./top-bar";
-import { CatalogPanel } from "./catalog-panel";
-import { TicketPanel } from "./ticket-panel";
-import { ModalSalida } from "./modal-salida";
-import { ModalPendientes } from "./modal-pendientes";
-import { ModalCintaTestigo } from "./modal-cinta-testigo";
-import { ModalCierreCiego } from "./modal-cierre-ciego";
-import { ModalAnular } from "./modal-anular";
+import { HeaderBolsillos } from "./HeaderBolsillos";
+import { CatalogoFlash } from "./CatalogoFlash";
+import { TicketCobroPanel } from "./TicketCobroPanel";
+import { ModalSalidaDinero } from "./ModalSalidaDinero";
+import { ModalRendicionFoto } from "./ModalRendicionFoto";
+import { CintaTestigoModal } from "./CintaTestigoModal";
+import { CierreCajaModal } from "./CierreCajaModal";
+import { ModalAnularAdmin } from "./ModalAnularAdmin";
+
+import { abrirTurno, cerrarTurnoCaja } from "@/actions/turno-actions";
+import { registrarVentaFlash, anularVenta, ItemVentaInput } from "@/actions/venta-actions";
 import {
-  registrarVenta,
-  registrarMovimientoCaja,
-  subirComprobanteGasto,
-  cerrarTurnoCajaCiego,
-  abrirNuevoTurno,
-  anularUltimaVenta,
-  getCintaTestigo,
-  ItemVentaPayload,
-  RegistrarMovimientoInput,
-} from "@/server/actions";
+  registrarSalidaDinero,
+  adjuntarComprobanteFoto,
+  getCintaTestigoTurno,
+  RegistrarSalidaInput,
+} from "@/actions/movimiento-actions";
 
 interface PosLayoutProps {
   initialData: {
@@ -36,14 +34,14 @@ interface PosLayoutProps {
 export function PosLayout({ initialData }: PosLayoutProps) {
   // Estado de Turno y Bolsillos
   const [turno, setTurno] = useState(initialData.turno);
-  const [pendientes, setPendientes] = useState(initialData.pendientesRendir);
+  const [pendientes, setPendientes] = useState<any[]>(initialData.pendientesRendir || []);
 
-  // Estado del Ticket Activo
-  const [ticketItems, setTicketItems] = useState<ItemVentaPayload[]>([]);
+  // Estado del Ticket Activo (Cero fricción, 1 toque agrega producto)
+  const [ticketItems, setTicketItems] = useState<ItemVentaInput[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [isProcessingSale, setIsProcessingSale] = useState(false);
 
-  // Último ticket generado para anulación rápida
+  // Último ticket generado para salvaguarda de anulación rápida con PIN de Admin
   const [ultimoTicket, setUltimoTicket] = useState<{
     nroTicket: number;
     ventaId: string;
@@ -70,7 +68,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
 
   // 1. Agregar Producto al Ticket (Regla de Oro: Toque Directo Instantáneo)
   const handleSelectProducto = (prod: any) => {
-    const nuevoItem: ItemVentaPayload = {
+    const nuevoItem: ItemVentaInput = {
       productoId: prod.id,
       nombre: prod.nombre,
       precioBase: prod.precioBase,
@@ -103,7 +101,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     });
   };
 
-  // 3. Inyectar Extra Libre de Cocina (Nivel 2)
+  // 3. Inyectar Extra Libre de Cocina (Nivel 2 - Comodín Impredecible)
   const handleAddExtraLibre = (monto: number, nota?: string) => {
     if (ticketItems.length === 0 || monto <= 0) return;
     const targetIdx = selectedIndex !== null ? selectedIndex : ticketItems.length - 1;
@@ -133,13 +131,13 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     });
   };
 
-  // 5. Vaciar Ticket
+  // 5. Limpiar Ticket
   const handleLimpiarTicket = () => {
     setTicketItems([]);
     setSelectedIndex(null);
   };
 
-  // 6. Procesar Venta (Cobro en 3 segundos)
+  // 6. Procesar Venta (Cobro en 3 Segundos)
   const handleProcesarVenta = async (datosPago: {
     metodoPago: "EFECTIVO" | "QR" | "MIXTO";
     montoEfectivo: number;
@@ -150,17 +148,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     if (ticketItems.length === 0 || !turno) return;
     setIsProcessingSale(true);
 
-    const subtotalBase = ticketItems.reduce((acc, it) => acc + it.precioBase, 0);
-    const totalExtras = ticketItems.reduce(
-      (acc, it) =>
-        acc +
-        it.extrasFijos.reduce((s, e) => s + e.precio, 0) +
-        it.extrasLibres.reduce((s, e) => s + e.monto, 0),
-      0
-    );
-    const totalFinal = subtotalBase + totalExtras;
-
-    const res = await registrarVenta({
+    const res = await registrarVentaFlash({
       turnoId: turno.id,
       cajeraId: turno.cajeraId,
       metodoPago: datosPago.metodoPago,
@@ -169,15 +157,12 @@ export function PosLayout({ initialData }: PosLayoutProps) {
       efectivoRecibido: datosPago.efectivoRecibido,
       vueltoEntregado: datosPago.vueltoEntregado,
       items: ticketItems,
-      subtotalBase,
-      totalExtras,
-      totalFinal,
     });
 
     setIsProcessingSale(false);
 
     if (res.success && res.nroTicket && res.ventaId) {
-      // Actualizar bolsillos optimísticamente
+      // Actualización optimista de los dos bolsillos
       setTurno((prev: any) => ({
         ...prev,
         saldoEfectivoEsperado: prev.saldoEfectivoEsperado + datosPago.montoEfectivo,
@@ -187,7 +172,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
       setUltimoTicket({
         nroTicket: res.nroTicket,
         ventaId: res.ventaId,
-        total: totalFinal,
+        total: res.totalFinal || 0,
       });
 
       // Limpiar ticket
@@ -196,11 +181,11 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     }
   };
 
-  // 7. Salida / Retiro de Dinero (Caso María)
-  const handleConfirmarMovimiento = async (data: RegistrarMovimientoInput) => {
-    const res = await registrarMovimientoCaja(data);
-    if (res.success) {
-      // Actualizar saldos locales
+  // 7. Salida / Retiro de Dinero con Firma de PIN (Caso María)
+  const handleConfirmarSalida = async (data: RegistrarSalidaInput): Promise<boolean> => {
+    const res = await registrarSalidaDinero(data);
+    if (res.success && res.movimientoId) {
+      // Actualizar saldos locales de los dos bolsillos
       setTurno((prev: any) => {
         let ef = prev.saldoEfectivoEsperado;
         let qr = prev.saldoQrAcumulado;
@@ -237,19 +222,19 @@ export function PosLayout({ initialData }: PosLayoutProps) {
   };
 
   // 8. Respaldar Foto de Rendición
-  const handleSubirFoto = async (movimientoId: string, base64Url: string) => {
-    const res = await subirComprobanteGasto(movimientoId, base64Url);
+  const handleGuardarFoto = async (movimientoId: string, base64: string): Promise<boolean> => {
+    const res = await adjuntarComprobanteFoto(movimientoId, base64);
     if (res.success) {
-      setPendientes((prev: any[]) => prev.filter((p) => p.id !== movimientoId));
+      setPendientes((prev) => prev.filter((p) => p.id !== movimientoId));
       return true;
     }
     return false;
   };
 
-  // 9. Cierre Ciego de Turno
+  // 9. Cierre Ciego de Turno y Apertura
   const handleEjecutarCierre = async (montoContado: number) => {
     if (!turno) return null;
-    const res = await cerrarTurnoCajaCiego(turno.id, montoContado);
+    const res = await cerrarTurnoCaja(turno.id, montoContado);
     if (res.success && res.reporteZ) {
       return res.reporteZ;
     }
@@ -258,7 +243,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
 
   const handleIniciarNuevoTurno = async (fondoInicial: number) => {
     if (!turno) return;
-    const res = await abrirNuevoTurno(turno.cajeraId, fondoInicial);
+    const res = await abrirTurno(turno.cajeraId, fondoInicial);
     if (res.success && res.nuevoTurnoId) {
       setTurno({
         id: res.nuevoTurnoId,
@@ -274,9 +259,9 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     }
   };
 
-  // 10. Anular Última Venta
-  const handleConfirmarAnulacion = async (ventaId: string, pinAdmin: string) => {
-    const res = await anularUltimaVenta(ventaId, pinAdmin);
+  // 10. Anular Venta con PIN de Administrador
+  const handleConfirmarAnulacion = async (ventaId: string, pinAdmin: string): Promise<boolean> => {
+    const res = await anularVenta(ventaId, pinAdmin);
     if (res.success) {
       if (ultimoTicket) {
         setTurno((prev: any) => ({
@@ -290,11 +275,11 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     return false;
   };
 
-  // 11. Cargar Cinta Testigo
+  // 11. Cargar Cinta Testigo Cronológica
   const handleOpenCintaTestigo = async () => {
     setIsCintaTestigoOpen(true);
     if (turno) {
-      const res = await getCintaTestigo(turno.id);
+      const res = await getCintaTestigoTurno(turno.id);
       if (res.success && res.eventos) {
         setEventosCinta(res.eventos);
       }
@@ -310,9 +295,9 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     initialData.usuarios.find((u) => u.id === turno?.cajeraId)?.nombre || "Laura (Cajera)";
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-slate-950 overflow-hidden text-slate-100 font-sans">
+    <div className="h-screen w-screen flex flex-col bg-[#16181D] overflow-hidden text-[#E5E9F0] font-sans">
       {/* 1. BARRA SUPERIOR DE ESTADO ("LOS DOS BOLSILLOS DIGITALES") */}
-      <TopBar
+      <HeaderBolsillos
         saldoEfectivo={turno?.saldoEfectivoEsperado || 0}
         saldoQr={turno?.saldoQrAcumulado || 0}
         pendientesCount={pendientes.length}
@@ -324,9 +309,9 @@ export function PosLayout({ initialData }: PosLayoutProps) {
       />
 
       {/* 2. LAYOUT PRINCIPAL 60 / 40 */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
-        {/* Panel Izquierdo (60%): Catálogo Flash y Franja de Extras */}
-        <CatalogPanel
+      <main className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+        {/* Panel Izquierdo (60%): Catálogo Flash y Franja Fija de Extras */}
+        <CatalogoFlash
           categorias={initialData.categorias}
           productos={initialData.productos}
           toppingsFijos={initialData.toppingsFijos}
@@ -338,7 +323,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
         />
 
         {/* Panel Derecho (40%): Ticket Activo y Cobro en 3 Segundos */}
-        <TicketPanel
+        <TicketCobroPanel
           items={ticketItems}
           selectedIndex={selectedIndex}
           onSelectItem={(idx) => setSelectedIndex(idx)}
@@ -349,32 +334,32 @@ export function PosLayout({ initialData }: PosLayoutProps) {
           ultimoTicketGenerado={ultimoTicket}
           onOpenAnularUltimo={() => setIsAnularOpen(true)}
         />
-      </div>
+      </main>
 
-      {/* 3. MODALES DE SISTEMA */}
-      <ModalSalida
+      {/* 3. MODALES DE SISTEMA CON ARQUITECTURA WARM SLATE */}
+      <ModalSalidaDinero
         isOpen={isSalidaOpen}
         onClose={() => setIsSalidaOpen(false)}
         turnoId={turno?.id || ""}
         cajeraId={turno?.cajeraId || ""}
         usuarios={initialData.usuarios}
-        onConfirmarMovimiento={handleConfirmarMovimiento}
+        onConfirmarSalida={handleConfirmarSalida}
       />
 
-      <ModalPendientes
+      <ModalRendicionFoto
         isOpen={isPendientesOpen}
         onClose={() => setIsPendientesOpen(false)}
         pendientes={pendientes}
-        onSubirFoto={handleSubirFoto}
+        onGuardarFoto={handleGuardarFoto}
       />
 
-      <ModalCintaTestigo
+      <CintaTestigoModal
         isOpen={isCintaTestigoOpen}
         onClose={() => setIsCintaTestigoOpen(false)}
         eventos={eventosCinta}
       />
 
-      <ModalCierreCiego
+      <CierreCajaModal
         isOpen={isCierreCiegoOpen}
         onClose={() => setIsCierreCiegoOpen(false)}
         turnoId={turno?.id || ""}
@@ -382,7 +367,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
         onIniciarNuevoTurno={handleIniciarNuevoTurno}
       />
 
-      <ModalAnular
+      <ModalAnularAdmin
         isOpen={isAnularOpen}
         onClose={() => setIsAnularOpen(false)}
         ultimoTicket={ultimoTicket}
