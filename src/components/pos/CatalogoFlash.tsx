@@ -58,74 +58,66 @@ export function CatalogoFlash({
   const getCategoryIcon = (icono: string) => {
     switch (icono) {
       case "Coffee":
-        return <Coffee className="w-4 h-4" />;
+        return <Coffee className="w-4 h-4 shrink-0" />;
       case "Cake":
-        return <Cake className="w-4 h-4" />;
+        return <Cake className="w-4 h-4 shrink-0" />;
       case "PlusCircle":
-        return <PlusCircle className="w-4 h-4" />;
+        return <PlusCircle className="w-4 h-4 shrink-0" />;
       default:
-        return <Utensils className="w-4 h-4" />;
+        return <Utensils className="w-4 h-4 shrink-0" />;
     }
   };
 
-  const getCategoryColorTheme = (color: string) => {
+  const getCategoryAccent = (color: string) => {
     switch (color) {
       case "blue":
         return {
-          activeTab: "bg-sky-900/60 border-sky-500/40 text-sky-200",
-          cardBorder: "border-[#2E3440] hover:border-sky-500/40 bg-[#21252D]",
-          badge: "bg-sky-950/60 text-sky-300 border-sky-800/40",
-          accentText: "text-sky-300",
+          activeBorder: "border-b-[#38BDF8] text-[#38BDF8]",
+          badgeBg: "bg-[rgba(56,189,248,0.14)] text-[#38BDF8] border-[rgba(56,189,248,0.3)]",
         };
       case "yellow":
         return {
-          activeTab: "bg-amber-900/60 border-amber-500/40 text-amber-200",
-          cardBorder: "border-[#2E3440] hover:border-amber-500/40 bg-[#21252D]",
-          badge: "bg-amber-950/60 text-amber-300 border-amber-800/40",
-          accentText: "text-amber-300",
+          activeBorder: "border-b-[#FBBF24] text-[#FBBF24]",
+          badgeBg: "bg-[rgba(245,158,11,0.14)] text-[#FBBF24] border-[rgba(245,158,11,0.3)]",
         };
       case "green":
         return {
-          activeTab: "bg-emerald-900/60 border-emerald-500/40 text-emerald-200",
-          cardBorder: "border-[#2E3440] hover:border-emerald-500/40 bg-[#21252D]",
-          badge: "bg-emerald-950/60 text-emerald-300 border-emerald-800/40",
-          accentText: "text-emerald-300",
+          activeBorder: "border-b-[#34D399] text-[#34D399]",
+          badgeBg: "bg-[rgba(16,185,129,0.14)] text-[#34D399] border-[rgba(16,185,129,0.3)]",
         };
       default:
         return {
-          activeTab: "bg-orange-950/60 border-orange-500/40 text-orange-200",
-          cardBorder: "border-[#2E3440] hover:border-orange-500/40 bg-[#21252D]",
-          badge: "bg-orange-950/60 text-orange-300 border-orange-800/40",
-          accentText: "text-orange-300",
+          activeBorder: "border-b-[#FB7185] text-[#FB7185]",
+          badgeBg: "bg-[rgba(244,63,94,0.14)] text-[#FB7185] border-[rgba(244,63,94,0.3)]",
         };
     }
   };
 
   return (
     <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#16181D] select-none border-r border-[#2E3440]">
-      {/* 1. SECCIÓN FIJA SUPERIOR: ⭐ FAVORITOS FLASH (TOP 80/20) */}
-      <div className="p-3 bg-[#1C1F26] border-b border-[#2E3440]">
-        <div className="flex items-center gap-1.5 mb-2 text-xs font-black uppercase tracking-wider text-amber-400">
-          <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      {/* 1. SECCIÓN SUPERIOR: ⭐ TOP VENTAS FLASH */}
+      <div className="p-3 bg-[#1C1F26] border-b border-[#2E3440] shrink-0">
+        <div className="flex items-center gap-1.5 mb-2.5 text-xs font-bold uppercase tracking-wider text-[#FBBF24]">
+          <Star className="w-3.5 h-3.5 fill-[#FBBF24] text-[#FBBF24]" />
           <span>⭐ TOP VENTAS FLASH (1 TOQUE DIRECTO)</span>
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5">
           {favoritos.map((prod) => (
             <button
               key={prod.id}
               onClick={() => onSelectProducto(prod)}
-              className="bg-[#21252D] hover:bg-[#2A303C] hover:border-amber-500/50 active:scale-95 text-[#E5E9F0] p-2 rounded-xl border border-amber-500/25 flex flex-col justify-between items-start transition cursor-pointer text-left min-h-[68px]"
+              className="min-h-[80px] p-3 rounded-xl bg-[#21252D] border border-[rgba(245,158,11,0.35)] hover:border-[#FBBF24] active:scale-[0.98] transition-all duration-75 flex flex-col justify-between items-start cursor-pointer text-left group"
             >
               <div className="flex items-center justify-between w-full">
-                <span className="text-[10px] font-mono font-bold text-amber-400/90">
+                <span className="text-xs font-mono font-medium text-[#94A3B8]">
                   {prod.codigoCorto}
                 </span>
-                <Flame className="w-3 h-3 text-amber-500" />
+                <Flame className="w-3.5 h-3.5 text-[#FBBF24] opacity-80 group-hover:scale-110 transition-transform" />
               </div>
-              <div className="font-bold text-xs text-[#E5E9F0] leading-snug line-clamp-1 mt-1">
+              <div className="font-semibold text-base text-[#E5E9F0] leading-tight line-clamp-1 my-1">
                 {prod.nombre}
               </div>
-              <div className="text-xs font-black text-amber-300 tabular-nums mt-0.5">
+              <div className="w-full text-right text-lg font-bold font-mono tabular-nums text-[#FBBF24]">
                 Bs. {prod.precioBase.toFixed(2)}
               </div>
             </button>
@@ -133,18 +125,18 @@ export function CatalogoFlash({
         </div>
       </div>
 
-      {/* 2. PESTAÑAS DE CATEGORÍA POR CÓDIGO DE COLOR SOBRIO */}
-      <div className="px-3 py-2 flex gap-2 overflow-x-auto border-b border-[#2E3440] bg-[#16181D] no-scrollbar">
+      {/* 2. PESTAÑAS DE CATEGORÍAS */}
+      <div className="px-4 py-2 flex gap-2 overflow-x-auto border-b border-[#2E3440] bg-[#16181D] no-scrollbar shrink-0">
         {categorias.map((cat) => {
           const isActiva = cat.id === categoriaActiva;
-          const theme = getCategoryColorTheme(cat.colorSemantica);
+          const accent = getCategoryAccent(cat.colorSemantica);
           return (
             <button
               key={cat.id}
               onClick={() => setCategoriaActiva(cat.id)}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer border ${
+              className={`min-h-[46px] px-5 rounded-lg flex items-center gap-2.5 text-sm font-medium transition-all duration-75 whitespace-nowrap cursor-pointer border ${
                 isActiva
-                  ? `${theme.activeTab} shadow-sm`
+                  ? `bg-[#21252D] border-[#2E3440] border-b-2 ${accent.activeBorder} shadow-sm`
                   : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:text-[#E5E9F0] hover:bg-[#2A303C]"
               }`}
             >
@@ -155,38 +147,36 @@ export function CatalogoFlash({
         })}
       </div>
 
-      {/* 3. GRILLA DE PRODUCTOS DE LA CATEGORÍA */}
-      <div className="flex-1 p-3 overflow-y-auto">
+      {/* 3. GRILLA GENERAL DE PRODUCTOS */}
+      <div className="flex-1 p-3.5 overflow-y-auto">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
           {productosFiltrados.map((prod) => {
             const cat = categorias.find((c) => c.id === prod.categoriaId);
-            const theme = getCategoryColorTheme(cat?.colorSemantica || "orange");
+            const accent = getCategoryAccent(cat?.colorSemantica || "orange");
             return (
               <button
                 key={prod.id}
                 onClick={() => onSelectProducto(prod)}
-                className={`relative p-3 rounded-2xl border ${theme.cardBorder} flex flex-col justify-between items-start transition-all shadow-sm active:scale-96 cursor-pointer text-left min-h-[92px] group`}
+                className="min-h-[82px] p-3 rounded-xl bg-[#21252D] border border-[#2E3440] hover:bg-[#2A303C] hover:border-[#3B4252] active:scale-[0.98] transition-all duration-75 flex flex-col justify-between items-start cursor-pointer text-left group"
               >
                 <div className="flex items-center justify-between w-full">
-                  <span
-                    className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md border ${theme.badge}`}
-                  >
+                  <span className={`text-[11px] font-mono font-medium px-1.5 py-0.5 rounded border ${accent.badgeBg}`}>
                     {prod.codigoCorto}
                   </span>
-                  <span className="text-[#94A3B8] group-hover:scale-110 transition">
+                  <span className="text-[#94A3B8] group-hover:text-[#E5E9F0] transition-colors">
                     {getCategoryIcon(cat?.icono || "")}
                   </span>
                 </div>
 
-                <div className="font-bold text-xs text-[#E5E9F0] leading-snug line-clamp-2 mt-1.5">
+                <div className="font-semibold text-sm text-[#E5E9F0] leading-snug line-clamp-2 my-1.5">
                   {prod.nombre}
                 </div>
 
-                <div className="w-full flex items-center justify-between mt-2 pt-1.5 border-t border-[#2E3440]">
-                  <span className="text-sm font-black text-amber-300 tabular-nums">
+                <div className="w-full flex items-center justify-between pt-1.5 border-t border-[#2E3440]/80">
+                  <span className="text-base font-bold font-mono tabular-nums text-[#E5E9F0]">
                     Bs. {prod.precioBase.toFixed(2)}
                   </span>
-                  <div className="w-5 h-5 rounded-md bg-[#2A303C] group-hover:bg-amber-500 group-hover:text-slate-950 text-[#E5E9F0] flex items-center justify-center transition">
+                  <div className="w-5 h-5 rounded bg-[#2A303C] group-hover:bg-[#34D399] group-hover:text-[#16181D] text-[#94A3B8] flex items-center justify-center transition-colors">
                     <Plus className="w-3.5 h-3.5" />
                   </div>
                 </div>
@@ -196,7 +186,7 @@ export function CatalogoFlash({
         </div>
       </div>
 
-      {/* 4. FRANJA INFERIOR FIJA DE TOPPINGS Y EXTRAS */}
+      {/* 4. FRANJA INFERIOR ANCLADA DE TOPPINGS Y COMODÍN */}
       <BarraExtras
         toppingsFijos={toppingsFijos}
         hasItemSelected={hasItemSelected}

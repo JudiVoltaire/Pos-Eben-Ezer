@@ -3,15 +3,27 @@
 :root {
   --canvas: #16181d;
   --surface: #21252d;
+  --surface-hover: #2a303c;
   --panel: #1c1f26;
   --border-subtle: #2e3440;
   --text-primary: #e5e9f0;
   --text-secondary: #94a3b8;
   
-  --salvia: #10b981;
-  --acero: #0284c7;
-  --ocre: #d97706;
-  --terracota: #e11d48;
+  --salvia-text: #34d399;
+  --salvia-bg: rgba(16, 185, 129, 0.14);
+  --salvia-border: rgba(16, 185, 129, 0.35);
+
+  --acero-text: #38bdf8;
+  --acero-bg: rgba(56, 189, 248, 0.14);
+  --acero-border: rgba(56, 189, 248, 0.35);
+
+  --ocre-text: #fbbf24;
+  --ocre-bg: rgba(245, 158, 11, 0.12);
+  --ocre-border: rgba(245, 158, 11, 0.35);
+
+  --terracota-text: #fb7185;
+  --terracota-bg: rgba(244, 63, 94, 0.14);
+  --terracota-border: rgba(244, 63, 94, 0.35);
 }
 
 body {
@@ -20,39 +32,40 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow: hidden;
   user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Tipografía numérica tabular para lectura instantánea sin fatiga */
+/* Tipografía numérica tabular para lectura instantánea sin saltos ni fatiga */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Clases semánticas anti-fatiga visual */
-.bg-canvas {
-  background-color: #16181d;
+/* Barras de scroll discretas anti-distracción (6px, thumb #2E3440) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.bg-surface {
-  background-color: #21252d;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.bg-ticket-panel {
-  background-color: #1c1f26;
+::-webkit-scrollbar-thumb {
+  background: #2e3440;
+  border-radius: 9999px;
 }
 
-.border-subtle {
-  border-color: #2e3440;
+::-webkit-scrollbar-thumb:hover {
+  background: #3b4252;
 }
 
-.text-bone {
-  color: #e5e9f0;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2e3440 transparent;
 }
 
-.text-muted {
-  color: #94a3b8;
-}
-
-/* Ocultar scrollbars manteniendo scroll */
+/* Ocultar scrollbars manteniendo scroll donde sea necesario */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

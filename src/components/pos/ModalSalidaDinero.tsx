@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Banknote, QrCode, CheckCircle2, Delete } from "lucide-react";
+import { X, Banknote, QrCode, CheckCircle2, Delete, ArrowDownCircle } from "lucide-react";
 import { RegistrarSalidaInput } from "@/actions/movimiento-actions";
 
 interface Usuario {
@@ -99,63 +99,63 @@ export function ModalSalidaDinero({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 select-none">
-      <div className="bg-[#1C1F26] border border-[#2E3440] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 bg-[#16181D]/80 backdrop-blur-sm flex items-center justify-center p-3 select-none">
+      <div className="bg-[#1C1F26] border border-[#2E3440] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Encabezado */}
-        <div className="p-4 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">💸</span>
-            <h3 className="text-sm font-black text-amber-400 uppercase tracking-wider">
+        <div className="h-14 px-5 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5">
+            <ArrowDownCircle className="w-5 h-5 text-[#FB7185]" />
+            <h3 className="text-sm font-bold text-[#E5E9F0] uppercase tracking-wider">
               Salida / Retiro de Dinero (Caso María)
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-[#94A3B8] hover:text-[#E5E9F0] p-1 rounded-lg transition cursor-pointer"
+            className="text-[#94A3B8] hover:text-[#E5E9F0] p-1.5 rounded-lg hover:bg-[#21252D] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Cuerpo */}
-        <div className="p-4 space-y-4 overflow-y-auto">
+        <div className="p-5 space-y-4 overflow-y-auto">
           {/* Paso 1: Selector Obligatorio de Bolsillo */}
           <div>
-            <label className="text-xs font-black uppercase tracking-wider text-[#E5E9F0] block mb-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] block mb-2">
               1. ¿De dónde sale el dinero? (Selector de Bolsillo)
             </label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => setBolsillo("EFECTIVO_CAJON")}
-                className={`py-2.5 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer ${
+                className={`h-12 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all duration-75 cursor-pointer ${
                   bolsillo === "EFECTIVO_CAJON"
-                    ? "bg-emerald-950/70 border-emerald-500/50 text-emerald-300 shadow-sm"
-                    : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:bg-[#2A303C]"
+                    ? "bg-[rgba(16,185,129,0.14)] border-[rgba(16,185,129,0.35)] text-[#34D399] shadow-sm"
+                    : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:text-[#E5E9F0] hover:bg-[#2A303C]"
                 }`}
               >
-                <Banknote className="w-4 h-4 text-emerald-400" />
-                <span>💵 Efectivo del Cajón</span>
+                <Banknote className="w-4 h-4 text-[#34D399]" />
+                <span>Efectivo del Cajón</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setBolsillo("QR_BANCO")}
-                className={`py-2.5 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-2 transition cursor-pointer ${
+                className={`h-12 px-3 rounded-xl border text-xs font-semibold flex items-center justify-center gap-2 transition-all duration-75 cursor-pointer ${
                   bolsillo === "QR_BANCO"
-                    ? "bg-sky-950/70 border-sky-500/50 text-sky-300 shadow-sm"
-                    : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:bg-[#2A303C]"
+                    ? "bg-[rgba(56,189,248,0.14)] border-[rgba(56,189,248,0.35)] text-[#38BDF8] shadow-sm"
+                    : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:text-[#E5E9F0] hover:bg-[#2A303C]"
                 }`}
               >
-                <QrCode className="w-4 h-4 text-sky-400" />
-                <span>📱 Transferencia QR / Banco</span>
+                <QrCode className="w-4 h-4 text-[#38BDF8]" />
+                <span>Transferencia QR / Banco</span>
               </button>
             </div>
           </div>
 
           {/* Paso 2: Motivo Rápido */}
           <div>
-            <label className="text-xs font-black uppercase tracking-wider text-[#E5E9F0] block mb-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] block mb-2">
               2. Motivo de la Salida
             </label>
             <div className="grid grid-cols-2 gap-2">
@@ -167,9 +167,9 @@ export function ModalSalidaDinero({
                     setTipo(m.tipo);
                     setMotivo(m.mot);
                   }}
-                  className={`py-2 px-2.5 rounded-xl border text-xs font-bold transition text-left cursor-pointer ${
+                  className={`h-11 px-3 rounded-xl border text-xs font-medium transition-all duration-75 text-left cursor-pointer flex items-center ${
                     motivo === m.mot
-                      ? "bg-amber-950/60 border-amber-500/50 text-amber-300 font-black"
+                      ? "bg-[rgba(244,63,94,0.14)] border-[rgba(244,63,94,0.35)] text-[#FB7185] font-semibold"
                       : "bg-[#21252D] border-[#2E3440] text-[#E5E9F0] hover:bg-[#2A303C]"
                   }`}
                 >
@@ -182,26 +182,26 @@ export function ModalSalidaDinero({
           {/* Monto y Receptor */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-black uppercase tracking-wider text-[#E5E9F0] block mb-1">
-                Monto en Bolivianos (Bs.)
+              <label className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] block mb-1.5">
+                Monto en Bs.
               </label>
               <input
                 type="number"
                 placeholder="0.00"
                 value={montoStr}
                 onChange={(e) => setMontoStr(e.target.value)}
-                className="w-full bg-[#16181D] border border-[#2E3440] text-amber-300 text-2xl font-black rounded-xl px-3 py-2 text-center focus:outline-none focus:border-amber-400 tabular-nums"
+                className="w-full h-12 bg-[#16181D] border border-[#2E3440] text-[#FB7185] text-xl font-bold font-mono rounded-xl px-3 text-center focus:outline-none focus:border-[#FB7185]/60 tabular-nums transition-colors"
               />
             </div>
 
             <div>
-              <label className="text-xs font-black uppercase tracking-wider text-[#E5E9F0] block mb-1">
+              <label className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] block mb-1.5">
                 ¿Quién recibe el dinero?
               </label>
               <select
                 value={receptorId}
                 onChange={(e) => setReceptorId(e.target.value)}
-                className="w-full bg-[#16181D] border border-[#2E3440] text-[#E5E9F0] text-xs font-bold rounded-xl px-3 py-3 focus:outline-none focus:border-amber-400"
+                className="w-full h-12 bg-[#16181D] border border-[#2E3440] text-[#E5E9F0] text-xs font-semibold rounded-xl px-3 focus:outline-none focus:border-[#FB7185]/60 transition-colors"
               >
                 {usuarios.map((u) => (
                   <option key={u.id} value={u.id}>
@@ -213,7 +213,7 @@ export function ModalSalidaDinero({
           </div>
 
           <div>
-            <label className="text-xs font-black uppercase tracking-wider text-[#E5E9F0] block mb-1">
+            <label className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] block mb-1.5">
               Nota Opcional
             </label>
             <input
@@ -221,23 +221,23 @@ export function ModalSalidaDinero({
               placeholder="ej. Verduras para almuerzo, Garrafa 1..."
               value={notaOpcional}
               onChange={(e) => setNotaOpcional(e.target.value)}
-              className="w-full bg-[#16181D] border border-[#2E3440] text-[#E5E9F0] text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-amber-400"
+              className="w-full h-10 bg-[#16181D] border border-[#2E3440] text-[#E5E9F0] placeholder-[#94A3B8] text-xs rounded-xl px-3 focus:outline-none focus:border-[#FB7185]/60 transition-colors"
             />
           </div>
 
           {/* Paso 3: Firma Digital con PIN */}
-          <div className="bg-[#16181D] p-3.5 rounded-2xl border border-[#2E3440]">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-black uppercase text-amber-400 tracking-wider">
+          <div className="bg-[#16181D] p-4 rounded-xl border border-[#2E3440]">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase text-[#FB7185] tracking-wider">
                 Firma Digital (PIN 4 Dígitos del Receptor)
               </span>
               <div className="flex gap-2">
                 {[0, 1, 2, 3].map((idx) => (
                   <div
                     key={idx}
-                    className={`w-3 h-3 rounded-full border transition-all ${
+                    className={`w-3.5 h-3.5 rounded-full border transition-all duration-75 ${
                       pinReceptor.length > idx
-                        ? "bg-amber-400 border-amber-400 scale-110 shadow-sm"
+                        ? "bg-[#FB7185] border-[#FB7185] scale-110 shadow-sm"
                         : "border-[#2E3440] bg-[#21252D]"
                     }`}
                   />
@@ -246,13 +246,13 @@ export function ModalSalidaDinero({
             </div>
 
             {/* Teclado Táctil */}
-            <div className="grid grid-cols-3 gap-1.5 max-w-[260px] mx-auto mt-2">
+            <div className="grid grid-cols-3 gap-2 max-w-[280px] mx-auto">
               {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => (
                 <button
                   key={n}
                   type="button"
                   onClick={() => handleKey(n.toString())}
-                  className="bg-[#21252D] hover:bg-[#2A303C] active:scale-95 text-[#E5E9F0] font-black text-base py-2 rounded-xl border border-[#2E3440] transition cursor-pointer"
+                  className="h-14 bg-[#21252D] hover:bg-[#2A303C] active:scale-[0.98] text-[#E5E9F0] font-bold text-xl font-mono rounded-xl border border-[#2E3440] transition-all duration-75 cursor-pointer tabular-nums"
                 >
                   {n}
                 </button>
@@ -261,21 +261,21 @@ export function ModalSalidaDinero({
               <button
                 type="button"
                 onClick={() => handleKey("0")}
-                className="bg-[#21252D] hover:bg-[#2A303C] active:scale-95 text-[#E5E9F0] font-black text-base py-2 rounded-xl border border-[#2E3440] transition cursor-pointer"
+                className="h-14 bg-[#21252D] hover:bg-[#2A303C] active:scale-[0.98] text-[#E5E9F0] font-bold text-xl font-mono rounded-xl border border-[#2E3440] transition-all duration-75 cursor-pointer tabular-nums"
               >
                 0
               </button>
               <button
                 type="button"
                 onClick={handleBackspace}
-                className="bg-[#21252D] hover:bg-rose-950 text-rose-400 font-bold py-2 rounded-xl border border-[#2E3440] transition cursor-pointer flex items-center justify-center"
+                className="h-14 bg-[#21252D] hover:bg-[rgba(244,63,94,0.15)] text-[#FB7185] font-bold rounded-xl border border-[#2E3440] transition-all duration-75 cursor-pointer flex items-center justify-center"
               >
-                <Delete className="w-4 h-4" />
+                <Delete className="w-5 h-5" />
               </button>
             </div>
 
             {errorMessage && (
-              <p className="text-xs font-bold text-rose-400 text-center mt-2">
+              <p className="text-xs font-semibold text-[#FB7185] text-center mt-2.5">
                 {errorMessage}
               </p>
             )}
@@ -283,11 +283,11 @@ export function ModalSalidaDinero({
         </div>
 
         {/* Pie de Confirmación */}
-        <div className="p-4 bg-[#16181D] border-t border-[#2E3440] flex gap-2">
+        <div className="p-4 bg-[#16181D] border-t border-[#2E3440] flex gap-3 shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="flex-1 py-2.5 bg-[#21252D] hover:bg-[#2A303C] text-[#E5E9F0] font-bold text-xs rounded-xl transition cursor-pointer"
+            className="flex-1 h-12 bg-[#21252D] hover:bg-[#2A303C] text-[#E5E9F0] font-medium text-xs rounded-xl border border-[#2E3440] transition-all duration-75 cursor-pointer"
           >
             Cancelar
           </button>
@@ -295,9 +295,9 @@ export function ModalSalidaDinero({
             type="button"
             disabled={isSubmitting || pinReceptor.length !== 4 || !montoStr}
             onClick={handleSubmit}
-            className="flex-2 py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 text-slate-950 font-black text-xs uppercase rounded-xl transition cursor-pointer flex items-center justify-center gap-1.5"
+            className="flex-2 h-12 bg-[#FB7185] hover:bg-[#F43F5E] disabled:opacity-40 text-[#16181D] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-75 cursor-pointer flex items-center justify-center gap-2"
           >
-            <CheckCircle2 className="w-4 h-4" />
+            <CheckCircle2 className="w-4 h-4 text-[#16181D]" />
             <span>{isSubmitting ? "Firmando..." : "Firmar y Registrar Salida"}</span>
           </button>
         </div>

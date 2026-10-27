@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, AlertTriangle, Delete, ShieldAlert } from "lucide-react";
+import { X, Delete, ShieldAlert } from "lucide-react";
 
 interface ModalAnularAdminProps {
   isOpen: boolean;
@@ -52,19 +52,19 @@ export function ModalAnularAdmin({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 select-none">
-      <div className="bg-[#1C1F26] border border-[#2E3440] rounded-3xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 bg-[#16181D]/80 backdrop-blur-sm flex items-center justify-center p-3 select-none">
+      <div className="bg-[#1C1F26] border border-[#2E3440] rounded-2xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col">
         {/* Encabezado */}
-        <div className="p-4 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between">
-          <div className="flex items-center gap-2 text-rose-400">
-            <ShieldAlert className="w-5 h-5" />
-            <h3 className="text-sm font-black uppercase tracking-wider text-[#E5E9F0]">
+        <div className="h-14 px-5 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2.5 text-[#FB7185]">
+            <ShieldAlert className="w-5 h-5 text-[#FB7185]" />
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[#E5E9F0]">
               Anular Venta #{ultimoTicket.nroTicket}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-[#94A3B8] hover:text-[#E5E9F0] p-1 rounded-lg hover:bg-[#21252D] transition cursor-pointer"
+            className="text-[#94A3B8] hover:text-[#E5E9F0] p-1.5 rounded-lg hover:bg-[#21252D] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -72,10 +72,10 @@ export function ModalAnularAdmin({
 
         {/* Contenido */}
         <div className="p-5 space-y-4">
-          <div className="bg-rose-950/40 border border-rose-500/30 rounded-2xl p-3 text-center">
-            <p className="text-xs text-rose-200">
+          <div className="bg-[rgba(244,63,94,0.14)] border border-[rgba(244,63,94,0.35)] rounded-xl p-3.5 text-center">
+            <p className="text-xs text-[#E5E9F0]">
               ¿Estás seguro de anular el ticket #{ultimoTicket.nroTicket} por{" "}
-              <strong className="text-white font-black tabular-nums">
+              <strong className="text-[#FB7185] font-bold font-mono tabular-nums">
                 Bs. {ultimoTicket.total.toFixed(2)}
               </strong>
               ?
@@ -86,17 +86,17 @@ export function ModalAnularAdmin({
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-black uppercase text-amber-400 tracking-wider">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase text-[#FBBF24] tracking-wider">
                 PIN de Administrador (Dueña):
               </span>
               <div className="flex gap-2">
                 {[0, 1, 2, 3].map((idx) => (
                   <div
                     key={idx}
-                    className={`w-3.5 h-3.5 rounded-full border transition-all ${
+                    className={`w-3.5 h-3.5 rounded-full border transition-all duration-75 ${
                       pinAdmin.length > idx
-                        ? "bg-rose-400 border-rose-400 scale-110 shadow-sm shadow-rose-400/50"
+                        ? "bg-[#FB7185] border-[#FB7185] scale-110 shadow-sm"
                         : "border-[#2E3440] bg-[#16181D]"
                     }`}
                   />
@@ -111,7 +111,7 @@ export function ModalAnularAdmin({
                   key={n}
                   type="button"
                   onClick={() => handleKeyPress(n)}
-                  className="h-12 bg-[#21252D] hover:bg-[#2E3440] active:scale-95 text-[#E5E9F0] text-lg font-black rounded-xl border border-[#2E3440] transition cursor-pointer tabular-nums"
+                  className="h-14 bg-[#21252D] hover:bg-[#2A303C] active:scale-[0.98] text-[#E5E9F0] text-xl font-bold font-mono rounded-xl border border-[#2E3440] transition-all duration-75 cursor-pointer tabular-nums"
                 >
                   {n}
                 </button>
@@ -119,14 +119,14 @@ export function ModalAnularAdmin({
               <button
                 type="button"
                 onClick={handleDeletePin}
-                className="h-12 bg-[#21252D] hover:bg-rose-950/40 text-rose-400 active:scale-95 flex items-center justify-center rounded-xl border border-[#2E3440] transition cursor-pointer"
+                className="h-14 bg-[#21252D] hover:bg-[rgba(244,63,94,0.15)] text-[#FB7185] active:scale-[0.98] flex items-center justify-center rounded-xl border border-[#2E3440] transition-all duration-75 cursor-pointer"
               >
                 <Delete className="w-5 h-5" />
               </button>
               <button
                 type="button"
                 onClick={() => handleKeyPress("0")}
-                className="h-12 bg-[#21252D] hover:bg-[#2E3440] active:scale-95 text-[#E5E9F0] text-lg font-black rounded-xl border border-[#2E3440] transition cursor-pointer tabular-nums"
+                className="h-14 bg-[#21252D] hover:bg-[#2A303C] active:scale-[0.98] text-[#E5E9F0] text-xl font-bold font-mono rounded-xl border border-[#2E3440] transition-all duration-75 cursor-pointer tabular-nums"
               >
                 0
               </button>
@@ -134,14 +134,14 @@ export function ModalAnularAdmin({
                 type="button"
                 onClick={handleAnular}
                 disabled={pinAdmin.length !== 4 || isSubmitting}
-                className="h-12 bg-rose-600 hover:bg-rose-500 disabled:opacity-40 text-white font-black text-xs uppercase rounded-xl transition cursor-pointer flex items-center justify-center"
+                className="h-14 bg-[#FB7185] hover:bg-[#F43F5E] disabled:opacity-40 text-[#16181D] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-75 cursor-pointer flex items-center justify-center"
               >
                 {isSubmitting ? "..." : "Anular"}
               </button>
             </div>
 
             {errorMessage && (
-              <p className="text-xs text-rose-400 font-bold text-center mt-2">
+              <p className="text-xs text-[#FB7185] font-semibold text-center mt-2.5">
                 {errorMessage}
               </p>
             )}

@@ -120,15 +120,15 @@ export function TicketCobroPanel({
   };
 
   return (
-    <div className="w-full lg:w-[420px] bg-[#1C1F26] border-l border-[#2E3440] flex flex-col h-full shadow-2xl select-none">
+    <div className="w-full lg:w-[430px] bg-[#1C1F26] border-l border-[#2E3440] flex flex-col h-full shadow-2xl select-none shrink-0">
       {/* 1. ENCABEZADO DEL TICKET */}
-      <div className="p-3 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between">
+      <div className="h-12 px-4 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between shrink-0">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-          <h2 className="text-xs font-black text-[#E5E9F0] uppercase tracking-wider">
+          <div className="w-2 h-2 rounded-full bg-[#34D399]" />
+          <h2 className="text-xs font-bold text-[#E5E9F0] uppercase tracking-wider">
             Ticket Activo
           </h2>
-          <span className="text-[11px] font-bold text-[#94A3B8] bg-[#21252D] px-2 py-0.5 rounded-md tabular-nums">
+          <span className="text-xs font-mono font-medium text-[#94A3B8] bg-[#21252D] px-2 py-0.5 rounded-md tabular-nums border border-[#2E3440]">
             {items.length} platos
           </span>
         </div>
@@ -136,7 +136,7 @@ export function TicketCobroPanel({
         {items.length > 0 && (
           <button
             onClick={onLimpiarTicket}
-            className="text-xs text-rose-400 hover:text-rose-300 font-bold hover:bg-rose-950/40 px-2.5 py-1 rounded-lg transition cursor-pointer flex items-center gap-1"
+            className="text-xs text-[#FB7185] hover:text-[#FB7185] font-medium hover:bg-[rgba(244,63,94,0.12)] px-2.5 py-1 rounded-lg transition-all duration-75 cursor-pointer flex items-center gap-1.5"
           >
             <Trash2 className="w-3.5 h-3.5" />
             <span>Vaciar</span>
@@ -145,14 +145,14 @@ export function TicketCobroPanel({
       </div>
 
       {/* 2. LISTA DE PLATOS EN EL TICKET */}
-      <div className="flex-1 p-3 overflow-y-auto space-y-2 bg-[#1C1F26]">
+      <div className="flex-1 p-4 overflow-y-auto space-y-2 bg-[#1C1F26]">
         {items.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-[#94A3B8]">
-            <div className="w-14 h-14 rounded-2xl bg-[#21252D] border border-[#2E3440] flex items-center justify-center mb-2.5">
+            <div className="w-14 h-14 rounded-2xl bg-[#21252D] border border-[#2E3440] flex items-center justify-center mb-3">
               <ShoppingBag className="w-6 h-6 text-[#94A3B8]" />
             </div>
-            <p className="text-xs font-bold text-[#E5E9F0]">Ticket en espera</p>
-            <p className="text-[11px] text-[#94A3B8] mt-0.5">
+            <p className="text-sm font-semibold text-[#E5E9F0]">Ticket en espera</p>
+            <p className="text-xs text-[#94A3B8] mt-1 max-w-[220px]">
               Toca un producto del catálogo para agregarlo con 1 toque.
             </p>
           </div>
@@ -163,24 +163,24 @@ export function TicketCobroPanel({
               <div
                 key={idx}
                 onClick={() => onSelectItem(idx)}
-                className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
+                className={`p-3 rounded-lg border transition-all duration-75 cursor-pointer ${
                   isSelected
-                    ? "bg-[#21252D] border-amber-500/50 shadow-sm ring-1 ring-amber-500/30"
-                    : "bg-[#16181D]/80 border-[#2E3440] hover:border-[#3E4556]"
+                    ? "bg-[#262B35] border-l-[3px] border-l-[#FBBF24] border-t-[#2E3440] border-r-[#2E3440] border-b-[#2E3440] shadow-sm"
+                    : "bg-[#21252D] border-[#2E3440] hover:bg-[#2A303C]"
                 }`}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1">
-                    <div className="font-bold text-xs text-[#E5E9F0] leading-snug">
+                    <div className="font-semibold text-sm text-[#E5E9F0] leading-snug">
                       {it.nombre}
                     </div>
-                    <div className="text-[11px] text-[#94A3B8] tabular-nums mt-0.5">
+                    <div className="text-xs font-mono text-[#94A3B8] tabular-nums mt-0.5">
                       Base: Bs. {it.precioBase.toFixed(2)}
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
-                    <span className="font-black text-xs text-amber-300 tabular-nums">
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-bold text-sm font-mono tabular-nums text-[#FBBF24]">
                       Bs. {it.totalItem.toFixed(2)}
                     </span>
                     <button
@@ -188,7 +188,7 @@ export function TicketCobroPanel({
                         e.stopPropagation();
                         onRemoveItem(idx);
                       }}
-                      className="text-[#94A3B8] hover:text-rose-400 p-1 rounded-md transition cursor-pointer"
+                      className="text-[#94A3B8] hover:text-[#FB7185] p-1 rounded-md transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -197,17 +197,21 @@ export function TicketCobroPanel({
 
                 {/* Desglose de extras indentados */}
                 {(it.extrasFijos.length > 0 || it.extrasLibres.length > 0) && (
-                  <div className="mt-1.5 pt-1.5 border-t border-[#2E3440] space-y-0.5 pl-2 border-l-2 border-emerald-500/30">
+                  <div className="mt-2 pt-2 border-t border-[#2E3440] space-y-1 pl-3 border-l border-[#2E3440] text-xs text-[#94A3B8]">
                     {it.extrasFijos.map((ef, i) => (
-                      <div key={i} className="flex justify-between text-[11px] text-emerald-300">
+                      <div key={i} className="flex justify-between items-center text-xs text-[#94A3B8]">
                         <span>+ {ef.nombre}</span>
-                        <span className="font-bold tabular-nums">+Bs. {ef.precio.toFixed(2)}</span>
+                        <span className="font-mono tabular-nums font-semibold text-[#34D399]">
+                          +Bs. {ef.precio.toFixed(2)}
+                        </span>
                       </div>
                     ))}
                     {it.extrasLibres.map((el, i) => (
-                      <div key={i} className="flex justify-between text-[11px] text-amber-300">
+                      <div key={i} className="flex justify-between items-center text-xs text-[#94A3B8]">
                         <span>+ {el.nota || "Extra de Cocina"}</span>
-                        <span className="font-bold tabular-nums">+Bs. {el.monto.toFixed(2)}</span>
+                        <span className="font-mono tabular-nums font-semibold text-[#FBBF24]">
+                          +Bs. {el.monto.toFixed(2)}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -218,84 +222,74 @@ export function TicketCobroPanel({
         )}
       </div>
 
-      {/* 3. TOTAL A COBRAR GIGANTE */}
-      <div className="p-3.5 bg-[#16181D] border-t border-[#2E3440]">
-        <div className="flex items-center justify-between text-[11px] text-[#94A3B8] mb-1 tabular-nums">
-          <span>Base: Bs. {subtotalBase.toFixed(2)}</span>
-          <span>Extras: +Bs. {totalExtras.toFixed(2)}</span>
-        </div>
-        <div className="flex items-baseline justify-between bg-[#21252D] border border-[#2E3440] px-4 py-2 rounded-xl">
-          <span className="text-xs font-black uppercase tracking-wider text-[#E5E9F0]">
-            TOTAL A COBRAR:
-          </span>
-          <span className="text-2xl font-black text-amber-300 tabular-nums">
+      {/* 3. ZONA DE COBRO ANCLADA ABAJO */}
+      <div className="p-4 bg-[#16181D]/95 border-t border-[#2E3440] space-y-3 shrink-0">
+        {/* Cabecera de Total */}
+        <div className="flex items-baseline justify-between bg-[#21252D] border border-[#2E3440] px-4 py-2.5 rounded-xl">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] block">
+              TOTAL A COBRAR
+            </span>
+            <span className="text-[11px] font-mono text-[#94A3B8] tabular-nums">
+              Base: Bs. {subtotalBase.toFixed(2)} | Extras: Bs. {totalExtras.toFixed(2)}
+            </span>
+          </div>
+          <span className="text-3xl font-extrabold font-mono tabular-nums text-[#E5E9F0]">
             Bs. {totalFinal.toFixed(2)}
           </span>
         </div>
-      </div>
 
-      {/* 4. SELECTOR DE MÉTODO DE PAGO */}
-      <div className="px-3.5 pb-2 bg-[#16181D] flex gap-2">
-        <button
-          onClick={() => setMetodoPago("EFECTIVO")}
-          className={`flex-1 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer border ${
-            metodoPago === "EFECTIVO"
-              ? "bg-emerald-950/70 border-emerald-500/50 text-emerald-300 shadow-sm"
-              : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:bg-[#2A303C]"
-          }`}
-        >
-          <Banknote className="w-4 h-4 text-emerald-400" />
-          <span>💵 EFECTIVO</span>
-        </button>
+        {/* Selector de Método de Pago */}
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            onClick={() => setMetodoPago("EFECTIVO")}
+            className={`h-12 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition-all duration-75 cursor-pointer ${
+              metodoPago === "EFECTIVO"
+                ? "bg-[rgba(16,185,129,0.14)] border border-[rgba(16,185,129,0.35)] text-[#34D399] shadow-sm"
+                : "bg-[#21252D] border border-[#2E3440] text-[#94A3B8] hover:text-[#E5E9F0] hover:bg-[#2A303C]"
+            }`}
+          >
+            <Banknote className="w-4 h-4 text-[#34D399]" />
+            <span>EFECTIVO</span>
+          </button>
 
-        <button
-          onClick={() => setMetodoPago("QR")}
-          className={`flex-1 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer border ${
-            metodoPago === "QR"
-              ? "bg-sky-950/70 border-sky-500/50 text-sky-300 shadow-sm"
-              : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:bg-[#2A303C]"
-          }`}
-        >
-          <QrCode className="w-4 h-4 text-sky-400" />
-          <span>📱 QR BANCO</span>
-        </button>
+          <button
+            onClick={() => setMetodoPago("QR")}
+            className={`h-12 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition-all duration-75 cursor-pointer ${
+              metodoPago === "QR"
+                ? "bg-[rgba(56,189,248,0.14)] border border-[rgba(56,189,248,0.35)] text-[#38BDF8] shadow-sm"
+                : "bg-[#21252D] border border-[#2E3440] text-[#94A3B8] hover:text-[#E5E9F0] hover:bg-[#2A303C]"
+            }`}
+          >
+            <QrCode className="w-4 h-4 text-[#38BDF8]" />
+            <span>QR BANCO</span>
+          </button>
 
-        <button
-          onClick={() => setMetodoPago("MIXTO")}
-          className={`flex-1 py-2 rounded-xl font-bold text-xs flex items-center justify-center gap-1.5 transition cursor-pointer border ${
-            metodoPago === "MIXTO"
-              ? "bg-purple-950/70 border-purple-500/50 text-purple-300 shadow-sm"
-              : "bg-[#21252D] border-[#2E3440] text-[#94A3B8] hover:bg-[#2A303C]"
-          }`}
-        >
-          <Scale className="w-4 h-4 text-purple-400" />
-          <span>⚖️ MIXTO</span>
-        </button>
-      </div>
+          <button
+            onClick={() => setMetodoPago("MIXTO")}
+            className={`h-12 rounded-xl font-semibold text-xs flex items-center justify-center gap-1.5 transition-all duration-75 cursor-pointer ${
+              metodoPago === "MIXTO"
+                ? "bg-[rgba(245,158,11,0.12)] border border-[rgba(245,158,11,0.35)] text-[#FBBF24] shadow-sm"
+                : "bg-[#21252D] border border-[#2E3440] text-[#94A3B8] hover:text-[#E5E9F0] hover:bg-[#2A303C]"
+            }`}
+          >
+            <Scale className="w-4 h-4 text-[#FBBF24]" />
+            <span>PAGO MIXTO</span>
+          </button>
+        </div>
 
-      {/* 5. ASISTENTES DE PAGO CON VERDE SALVIA MATE */}
-      <div className="p-3.5 bg-[#1C1F26] border-t border-[#2E3440] flex flex-col gap-2.5">
+        {/* Asistente de Efectivo: Botonera de Billetes Rápidos y Caja de Vuelto */}
         {metodoPago === "EFECTIVO" && (
-          <div>
-            <div className="flex items-center justify-between text-xs text-[#E5E9F0] font-bold mb-1.5">
-              <span>Billetes Rápidos:</span>
-              {efectivoRecibido > 0 && (
-                <span className="text-amber-300 tabular-nums">
-                  Recibido: Bs. {efectivoRecibido.toFixed(2)}
-                </span>
-              )}
-            </div>
-
-            {/* Billetes sugeridos de 1 toque */}
-            <div className="grid grid-cols-5 gap-1.5 mb-2">
+          <div className="space-y-2">
+            <div className="grid grid-cols-5 gap-1.5">
               {billetesSugeridos.map((monto, idx) => (
                 <button
                   key={idx}
                   onClick={() => setEfectivoRecibidoStr(monto.toString())}
-                  className={`py-1.5 rounded-lg text-xs font-bold transition cursor-pointer text-center border tabular-nums ${
+                  className={`h-11 rounded-lg text-xs font-mono tabular-nums font-bold transition-all duration-75 cursor-pointer border ${
                     efectivoRecibido === monto
-                      ? "bg-emerald-600 text-white border-emerald-400 shadow-sm"
-                      : "bg-[#21252D] hover:bg-[#2A303C] text-[#E5E9F0] border-[#2E3440]"
+                      ? "bg-[rgba(16,185,129,0.25)] border-[rgba(16,185,129,0.5)] text-[#34D399]"
+                      : "bg-[#21252D] border-[#2E3440] text-[#E5E9F0] hover:border-[#34D399]/50 hover:bg-[#2A303C] active:scale-[0.98]"
                   }`}
                 >
                   {monto === totalFinal ? "Exacto" : `Bs. ${monto}`}
@@ -303,13 +297,13 @@ export function TicketCobroPanel({
               ))}
             </div>
 
-            {/* Vuelto Gigante en Verde Salvia Mate */}
-            <div className="bg-emerald-950/60 border border-emerald-500/40 rounded-xl p-2.5 flex items-center justify-between">
+            {/* Caja de Alto Contraste para el Vuelto */}
+            <div className="p-3 rounded-xl bg-[rgba(16,185,129,0.15)] border border-[rgba(16,185,129,0.35)] flex items-center justify-between">
               <div>
-                <div className="text-[10px] uppercase font-bold text-emerald-400/90 tracking-wider">
+                <div className="text-[10px] uppercase font-bold text-[#94A3B8] tracking-wider">
                   VUELTO A ENTREGAR:
                 </div>
-                <div className="text-xl font-black text-emerald-300 tabular-nums">
+                <div className="text-2xl font-extrabold font-mono tabular-nums text-[#34D399]">
                   Bs. {vuelto.toFixed(2)}
                 </div>
               </div>
@@ -318,25 +312,25 @@ export function TicketCobroPanel({
                 placeholder="Otro monto..."
                 value={efectivoRecibidoStr}
                 onChange={(e) => setEfectivoRecibidoStr(e.target.value)}
-                className="w-28 bg-[#16181D] border border-[#2E3440] text-[#E5E9F0] placeholder-[#94A3B8]/60 text-xs rounded-lg px-2.5 py-1.5 text-right font-bold focus:outline-none focus:border-emerald-400 tabular-nums"
+                className="w-28 bg-[#16181D] border border-[#2E3440] text-[#E5E9F0] placeholder-[#94A3B8] text-xs rounded-lg px-2.5 py-2 text-right font-mono font-bold focus:outline-none focus:border-[#34D399]/60 tabular-nums"
               />
             </div>
           </div>
         )}
 
         {metodoPago === "QR" && (
-          <div className="bg-sky-950/40 border border-sky-500/30 rounded-xl p-3 flex items-center gap-3">
-            <div className="w-14 h-14 bg-white rounded-lg flex items-center justify-center p-1">
-              <QrCode className="w-full h-full text-slate-950" />
+          <div className="p-3 rounded-xl bg-[rgba(56,189,248,0.12)] border border-[rgba(56,189,248,0.3)] flex items-center gap-3">
+            <div className="w-12 h-12 bg-[#21252D] border border-[#2E3440] rounded-lg flex items-center justify-center p-2 shrink-0">
+              <QrCode className="w-full h-full text-[#38BDF8]" />
             </div>
             <div>
-              <div className="text-[11px] font-bold uppercase text-sky-300">
+              <div className="text-xs font-bold uppercase tracking-wider text-[#38BDF8]">
                 Cobro por QR Bancario
               </div>
-              <div className="text-lg font-black text-sky-200 tabular-nums mt-0.5">
+              <div className="text-lg font-bold font-mono tabular-nums text-[#E5E9F0] mt-0.5">
                 Bs. {totalFinal.toFixed(2)}
               </div>
-              <p className="text-[10px] text-sky-400/80 mt-0.5">
+              <p className="text-[11px] text-[#94A3B8] mt-0.5">
                 Cliente escanea y confirmas recepción en pantalla.
               </p>
             </div>
@@ -344,45 +338,47 @@ export function TicketCobroPanel({
         )}
 
         {metodoPago === "MIXTO" && (
-          <div className="space-y-1.5 bg-[#16181D] p-2.5 rounded-xl border border-purple-500/30">
+          <div className="space-y-2 bg-[#21252D] p-3 rounded-xl border border-[#2E3440]">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-bold text-purple-300">Monto QR:</span>
+              <span className="text-xs font-semibold text-[#FBBF24]">Monto en QR:</span>
               <input
                 type="number"
                 placeholder="Bs."
                 value={montoQrMixtoStr}
                 onChange={(e) => setMontoQrMixtoStr(e.target.value)}
-                className="w-24 bg-[#21252D] border border-purple-500/40 text-purple-200 text-xs rounded-lg px-2 py-1 text-right font-bold tabular-nums"
+                className="w-28 bg-[#16181D] border border-[#2E3440] text-[#FBBF24] font-mono tabular-nums text-xs rounded-lg px-2.5 py-1.5 text-right font-bold focus:outline-none focus:border-[#FBBF24]/60"
               />
             </div>
-            <div className="flex items-center justify-between text-xs text-emerald-300 font-bold tabular-nums">
-              <span>Restante Efectivo:</span>
-              <span>Bs. {saldoEfectivoRequerido.toFixed(2)}</span>
+            <div className="flex items-center justify-between text-xs text-[#E5E9F0] font-medium pt-1 border-t border-[#2E3440]">
+              <span className="text-[#94A3B8]">Restante en Efectivo:</span>
+              <span className="font-mono tabular-nums font-bold text-[#34D399]">
+                Bs. {saldoEfectivoRequerido.toFixed(2)}
+              </span>
             </div>
-            <div className="bg-emerald-950/50 border border-emerald-500/30 rounded-lg p-1.5 flex items-center justify-between">
-              <span className="text-[11px] font-bold text-emerald-400">Vuelto:</span>
-              <span className="text-base font-black text-emerald-300 tabular-nums">
+            <div className="p-2 rounded-lg bg-[rgba(16,185,129,0.14)] border border-[rgba(16,185,129,0.3)] flex items-center justify-between">
+              <span className="text-[11px] font-bold text-[#94A3B8]">Vuelto:</span>
+              <span className="text-lg font-bold font-mono tabular-nums text-[#34D399]">
                 Bs. {vuelto.toFixed(2)}
               </span>
             </div>
           </div>
         )}
 
-        {/* 6. BOTÓN DE COBRO EN 3 SEGUNDOS */}
+        {/* Botón Principal de Confirmación */}
         <button
           disabled={items.length === 0 || isProcessing}
           onClick={handleConfirmarCobro}
-          className={`w-full py-3.5 rounded-xl font-black text-sm uppercase tracking-wider flex items-center justify-center gap-2 transition cursor-pointer active:scale-98 ${
+          className={`w-full h-14 rounded-xl font-extrabold text-base tracking-wide flex items-center justify-center gap-2 transition-all duration-75 cursor-pointer active:scale-[0.99] shadow-lg ${
             ventaExitosaTick
-              ? "bg-emerald-500 text-slate-950"
+              ? "bg-[#34D399] text-[#16181D]"
               : items.length === 0 || isProcessing
-              ? "bg-[#21252D] text-[#94A3B8]/50 cursor-not-allowed border border-[#2E3440]"
-              : "bg-emerald-600 hover:bg-emerald-500 text-slate-950 shadow-md shadow-emerald-600/20"
+              ? "bg-[#21252D] text-[#94A3B8] cursor-not-allowed border border-[#2E3440]"
+              : "bg-[#10B981] hover:bg-[#059669] text-[#16181D]"
           }`}
         >
           {ventaExitosaTick ? (
             <>
-              <CheckCircle2 className="w-5 h-5 text-slate-950" />
+              <CheckCircle2 className="w-5 h-5 text-[#16181D]" />
               <span>¡VENTA COBRADA CON ÉXITO!</span>
             </>
           ) : isProcessing ? (
@@ -395,15 +391,15 @@ export function TicketCobroPanel({
           )}
         </button>
 
-        {/* 7. SALVAGUARDA DE ANULACIÓN */}
+        {/* Salvaguarda de Anulación Rápida */}
         {ultimoTicketGenerado && (
           <div className="flex items-center justify-between pt-1 text-xs">
-            <span className="text-[#94A3B8] tabular-nums">
+            <span className="text-[#94A3B8] font-mono tabular-nums">
               Último: #{ultimoTicketGenerado.nroTicket} (Bs. {ultimoTicketGenerado.total.toFixed(2)})
             </span>
             <button
               onClick={onOpenAnularUltimo}
-              className="text-rose-400 hover:text-rose-300 font-bold hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-[#FB7185] hover:text-[#FB7185] bg-[rgba(244,63,94,0.1)] border border-[rgba(244,63,94,0.25)] hover:bg-[rgba(244,63,94,0.2)] px-2.5 py-1 rounded-lg font-medium flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Anular con PIN Admin</span>

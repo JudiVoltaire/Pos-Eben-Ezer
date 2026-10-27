@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ArrowDownCircle, Receipt, Camera, LockKeyhole, Store } from "lucide-react";
+import { ArrowDownCircle, Receipt, Camera, LockKeyhole, Store, Banknote, QrCode } from "lucide-react";
 
 interface HeaderBolsillosProps {
   saldoEfectivo: number;
@@ -25,91 +25,95 @@ export function HeaderBolsillos({
   onOpenCierreCiego,
 }: HeaderBolsillosProps) {
   return (
-    <header className="bg-[#1C1F26] border-b border-[#2E3440] text-[#E5E9F0] px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 shadow-md select-none">
-      {/* Identidad de Marca y Cajera */}
+    <header className="h-16 px-5 bg-[#1C1F26] border-b border-[#2E3440] flex items-center justify-between gap-4 select-none shrink-0 z-20">
+      {/* 1. Identidad de Marca y Cajera */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center font-black text-amber-400">
-          <Store className="w-5 h-5 text-amber-400" />
+        <div className="w-10 h-10 rounded-xl bg-[#21252D] border border-[#2E3440] flex items-center justify-center font-bold text-[#FBBF24]">
+          <Store className="w-5 h-5 text-[#FBBF24]" />
         </div>
         <div>
-          <h1 className="text-base font-black tracking-tight leading-none text-amber-400/90">
+          <h1 className="text-sm font-extrabold tracking-tight leading-none text-[#E5E9F0]">
             POS EBEN EZER
           </h1>
-          <p className="text-xs text-[#94A3B8] font-medium mt-0.5">
+          <p className="text-xs text-[#94A3B8] font-medium mt-1">
             Caja: <span className="text-[#E5E9F0] font-semibold">{cajeraNombre}</span>
           </p>
         </div>
       </div>
 
-      {/* Los Dos Bolsillos Digitales con Paleta Anti-Fatiga */}
+      {/* 2. Indicadores Centrales de los "Dos Bolsillos Digitales" */}
       <div className="flex items-center gap-3">
-        {/* Bolsillo 1: Caja Física (Efectivo en Cajón) */}
-        <div className="bg-emerald-950/50 border border-emerald-500/30 rounded-xl px-4 py-1.5 flex items-center gap-2.5 shadow-sm">
-          <span className="text-xl">💵</span>
-          <div>
-            <div className="text-[10px] uppercase font-bold tracking-wider text-emerald-400/90 leading-none">
-              Caja Física (En Cajón)
-            </div>
-            <div className="text-lg font-black text-emerald-300 tracking-tight tabular-nums leading-tight mt-0.5">
+        {/* Bolsillo 1: Caja Física (Efectivo en Cajón) - Verde Salvia */}
+        <div className="h-11 px-4 rounded-xl bg-[rgba(16,185,129,0.14)] border border-[rgba(16,185,129,0.35)] flex items-center gap-3 transition-colors">
+          <Banknote className="w-5 h-5 text-[#34D399] shrink-0" />
+          <div className="flex flex-col justify-center">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] leading-none">
+              CAJA FÍSICA (CAJÓN)
+            </span>
+            <span className="text-lg font-bold font-mono tabular-nums text-[#34D399] leading-tight mt-0.5">
               Bs. {saldoEfectivo.toFixed(2)}
-            </div>
+            </span>
           </div>
         </div>
 
-        {/* Bolsillo 2: Caja Digital (QR / Banco) */}
-        <div className="bg-sky-950/50 border border-sky-500/30 rounded-xl px-4 py-1.5 flex items-center gap-2.5 shadow-sm">
-          <span className="text-xl">📱</span>
-          <div>
-            <div className="text-[10px] uppercase font-bold tracking-wider text-sky-400/90 leading-none">
-              Caja Digital (QR / Banco)
-            </div>
-            <div className="text-lg font-black text-sky-300 tracking-tight tabular-nums leading-tight mt-0.5">
+        {/* Bolsillo 2: Caja Digital (QR / Banco) - Azul Acero */}
+        <div className="h-11 px-4 rounded-xl bg-[rgba(56,189,248,0.14)] border border-[rgba(56,189,248,0.35)] flex items-center gap-3 transition-colors">
+          <QrCode className="w-5 h-5 text-[#38BDF8] shrink-0" />
+          <div className="flex flex-col justify-center">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] leading-none">
+              CAJA DIGITAL (QR / BANCO)
+            </span>
+            <span className="text-lg font-bold font-mono tabular-nums text-[#38BDF8] leading-tight mt-0.5">
               Bs. {saldoQr.toFixed(2)}
-            </div>
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Botones de Acción Rápida */}
+      {/* 3. Botones de Acción Derecha */}
       <div className="flex items-center gap-2">
+        {/* Botón Salida / Retiro (Terracota Suave) */}
         <button
           onClick={onOpenSalida}
-          className="bg-amber-600/80 hover:bg-amber-500 active:scale-95 text-slate-950 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer shadow-sm"
+          className="h-10 px-3.5 rounded-lg bg-[rgba(244,63,94,0.14)] border border-[rgba(244,63,94,0.35)] text-sm font-medium text-[#FB7185] hover:bg-[rgba(244,63,94,0.22)] active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer"
         >
-          <ArrowDownCircle className="w-4 h-4 text-slate-950" />
-          <span>Retiro / Gasto</span>
+          <ArrowDownCircle className="w-4 h-4 text-[#FB7185]" />
+          <span>Salida / Retiro</span>
         </button>
 
+        {/* Botón Cinta Testigo */}
         <button
           onClick={onOpenCintaTestigo}
-          className="bg-[#21252D] hover:bg-[#2E3440] active:scale-95 text-[#E5E9F0] border border-[#2E3440] font-semibold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer"
+          className="h-10 px-3.5 rounded-lg bg-[#21252D] border border-[#2E3440] text-sm font-medium text-[#E5E9F0] hover:bg-[#2A303C] active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer"
         >
           <Receipt className="w-4 h-4 text-[#94A3B8]" />
           <span>Cinta Testigo</span>
         </button>
 
+        {/* Botón Rendición Foto con Badge */}
         <button
           onClick={onOpenPendientes}
-          className={`relative font-semibold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition border cursor-pointer ${
+          className={`h-10 px-3.5 rounded-lg border text-sm font-medium active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer ${
             pendientesCount > 0
-              ? "bg-rose-950/60 hover:bg-rose-900 border-rose-500/40 text-rose-200 animate-pulse"
-              : "bg-[#21252D] hover:bg-[#2E3440] border-[#2E3440] text-[#94A3B8]"
+              ? "bg-[rgba(244,63,94,0.14)] border-[rgba(244,63,94,0.35)] text-[#FB7185] hover:bg-[rgba(244,63,94,0.22)]"
+              : "bg-[#21252D] border-[#2E3440] text-[#E5E9F0] hover:bg-[#2A303C]"
           }`}
         >
-          <Camera className="w-4 h-4 text-rose-400" />
+          <Camera className={`w-4 h-4 ${pendientesCount > 0 ? "text-[#FB7185]" : "text-[#94A3B8]"}`} />
           <span>Rendición Foto</span>
           {pendientesCount > 0 && (
-            <span className="bg-rose-600 text-white font-black text-[10px] px-1.5 py-0.2 rounded-full ml-1 tabular-nums">
+            <span className="h-5 px-1.5 rounded-md bg-[rgba(244,63,94,0.25)] border border-[rgba(244,63,94,0.45)] text-[#FB7185] text-xs font-mono tabular-nums font-bold flex items-center justify-center">
               {pendientesCount}
             </span>
           )}
         </button>
 
+        {/* Botón Cierre Ciego */}
         <button
           onClick={onOpenCierreCiego}
-          className="bg-purple-950/60 hover:bg-purple-900 active:scale-95 text-purple-200 border border-purple-500/30 font-bold px-3 py-2 rounded-xl text-xs flex items-center gap-1.5 transition cursor-pointer"
+          className="h-10 px-3.5 rounded-lg bg-[#21252D] border border-[#2E3440] text-sm font-medium text-[#E5E9F0] hover:bg-[#2A303C] active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer"
         >
-          <LockKeyhole className="w-4 h-4 text-purple-400" />
+          <LockKeyhole className="w-4 h-4 text-[#94A3B8]" />
           <span>Cierre Ciego</span>
         </button>
       </div>
