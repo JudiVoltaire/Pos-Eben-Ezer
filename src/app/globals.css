@@ -1,29 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #16181d;
-  --surface: #21252d;
-  --surface-hover: #2a303c;
-  --panel: #1c1f26;
-  --border-subtle: #2e3440;
+  --canvas: #14171d;
+  --surface: #1e222b;
+  --surface-hover: #252a35;
+  --panel: #161920;
+  --border-subtle: #262b36;
   --text-primary: #e5e9f0;
-  --text-secondary: #94a3b8;
+  --text-secondary: #7d8597;
+  --text-muted: #646e82;
   
   --salvia-text: #34d399;
-  --salvia-bg: rgba(16, 185, 129, 0.14);
-  --salvia-border: rgba(16, 185, 129, 0.35);
+  --salvia-bg: rgba(16, 185, 129, 0.12);
+  --salvia-border: rgba(16, 185, 129, 0.3);
 
   --acero-text: #38bdf8;
-  --acero-bg: rgba(56, 189, 248, 0.14);
-  --acero-border: rgba(56, 189, 248, 0.35);
+  --acero-bg: rgba(56, 189, 248, 0.12);
+  --acero-border: rgba(56, 189, 248, 0.3);
 
-  --ocre-text: #fbbf24;
+  --ocre-text: #f59e0b;
   --ocre-bg: rgba(245, 158, 11, 0.12);
-  --ocre-border: rgba(245, 158, 11, 0.35);
+  --ocre-border: rgba(245, 158, 11, 0.3);
 
   --terracota-text: #fb7185;
-  --terracota-bg: rgba(244, 63, 94, 0.14);
-  --terracota-border: rgba(244, 63, 94, 0.35);
+  --terracota-bg: rgba(244, 63, 94, 0.12);
+  --terracota-border: rgba(244, 63, 94, 0.3);
 }
 
 body {
@@ -41,7 +42,44 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-/* Barras de scroll discretas anti-distracción (6px, thumb #2E3440) */
+/* Acabado de Hardware Táctil (Tactile Keycap Depth) */
+.pos-card {
+  background-color: #1e222b;
+  border: 1px solid #2d3340;
+  border-radius: 0.5rem; /* 8px */
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  transition: all 75ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pos-card:hover {
+  background-color: #252a35;
+  border-color: #3b4252;
+}
+
+.pos-card:active {
+  background-color: #191c24;
+  transform: translateY(1px);
+}
+
+.pos-btn {
+  background-color: #1e222b;
+  border: 1px solid #2d3340;
+  border-radius: 0.5rem; /* 8px */
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  transition: all 75ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pos-btn:hover {
+  background-color: #252a35;
+  border-color: #3b4252;
+}
+
+.pos-btn:active {
+  background-color: #191c24;
+  transform: translateY(1px);
+}
+
+/* Barras de scroll discretas anti-distracción (6px, thumb #262B36) */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -52,17 +90,17 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2e3440;
-  border-radius: 9999px;
+  background: #262b36;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b4252;
+  background: #363e4f;
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #2e3440 transparent;
+  scrollbar-color: #262b36 transparent;
 }
 
 /* Ocultar scrollbars manteniendo scroll donde sea necesario */

@@ -3,7 +3,7 @@ import { db, client } from "./index";
 import { usuarios, categorias, productos, toppingsFijos, turnosCaja } from "./schema";
 
 export async function seed() {
-  console.log("🌱 Iniciando Seed de datos para POS Eben Ezer...");
+  console.log("[SEED] Iniciando Seed de datos para POS Eben Ezer...");
 
   // 1. Crear tablas si no existen (vía Drizzle o DDL directo)
   await client.execute(`
@@ -99,7 +99,7 @@ export async function seed() {
     );
   `);
 
-  console.log("✅ Tablas verificadas/creadas.");
+  console.log("[OK] Tablas verificadas/creadas.");
 
   // 2. Limpiar registros anteriores de prueba
   await client.execute("DELETE FROM movimientos_caja;");
@@ -116,7 +116,7 @@ export async function seed() {
   const uLogistica = { id: "u-logistica", nombre: "María (Logística)", rol: "LOGISTICA" as const, pin4Digitos: "2222", activo: true };
 
   await db.insert(usuarios).values([uAdmin, uCajera, uLogistica]);
-  console.log("👥 Usuarios insertados: Laura (1111), María (2222), Dueña (9999).");
+  console.log("[OK] Usuarios insertados: Laura (1111), María (2222), Dueña (9999).");
 
   // 4. Insertar Categorías
   const catComida = { id: "cat-1", nombre: "Comidas & Platos", colorSemantica: "orange", icono: "Utensils", orden: 1 };
@@ -125,7 +125,7 @@ export async function seed() {
   const catExtras = { id: "cat-4", nombre: "Guarniciones & Extras", colorSemantica: "green", icono: "PlusCircle", orden: 4 };
 
   await db.insert(categorias).values([catComida, catBebidas, catPanaderia, catExtras]);
-  console.log("🏷️ Categorías insertadas (Naranja, Azul, Amarillo, Verde).");
+  console.log("[OK] Categorías insertadas (Naranja, Azul, Amarillo, Verde).");
 
   // 5. Insertar 12 Productos (6 Favoritos Flash)
   const prods = [
@@ -151,7 +151,7 @@ export async function seed() {
   ];
 
   await db.insert(productos).values(prods);
-  console.log("🍔 12 Productos insertados (6 Favoritos Flash destacados).");
+  console.log("[OK] 12 Productos insertados (6 Favoritos Flash destacados).");
 
   // 6. Insertar Toppings Fijos (Nivel 1)
   const toppings = [
@@ -163,7 +163,7 @@ export async function seed() {
   ];
 
   await db.insert(toppingsFijos).values(toppings);
-  console.log("🧀 5 Toppings fijos insertados.");
+  console.log("[OK] 5 Toppings fijos insertados.");
 
   // 7. Crear Turno Inicial Abierto para Laura
   await db.insert(turnosCaja).values({
@@ -174,9 +174,9 @@ export async function seed() {
     saldoQrAcumulado: 0,
     estado: "ABIERTO",
   });
-  console.log("💰 Turno inicial abierto para Laura con fondo de Bs. 200.");
+  console.log("[OK] Turno inicial abierto para Laura con fondo de Bs. 200.");
 
-  console.log("🎉 SEED COMPLETADO CON ÉXITO.");
+  console.log("[DONE] SEED COMPLETADO CON ÉXITO.");
 }
 
 // Ejecutar si se invoca directamente
@@ -184,7 +184,7 @@ if (require.main === module || process.argv[1]?.includes("seed")) {
   seed()
     .then(() => process.exit(0))
     .catch((err) => {
-      console.error("❌ Error en seed:", err);
+      console.error("[ERROR] Error en seed:", err);
       process.exit(1);
     });
 }

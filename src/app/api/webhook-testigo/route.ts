@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     }
 
     const { tipo, mensaje } = body;
-    const text = `🚨 *POS EBEN EZER - CINTA TESTIGO*\n*Tipo:* ${tipo}\n\n${mensaje}`;
+    const text = `[POS EBEN EZER - CINTA TESTIGO]\n*Tipo:* ${tipo}\n\n${mensaje}`;
 
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",

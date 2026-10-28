@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, LockKeyhole, CheckCircle2, ShieldCheck } from "lucide-react";
+import { X, Lock, Check, ShieldCheck } from "lucide-react";
 
 interface ReporteZ {
   turnoId: string;
@@ -64,96 +64,96 @@ export function CierreCajaModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#16181D]/80 backdrop-blur-sm flex items-center justify-center p-3 select-none">
-      <div className="bg-[#1C1F26] border border-[#2E3440] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 bg-[#14171D]/80 backdrop-blur-sm flex items-center justify-center p-3 select-none">
+      <div className="bg-[#161920] border border-[#262B36] rounded-lg w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Encabezado */}
-        <div className="h-14 px-5 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <LockKeyhole className="w-5 h-5 text-[#FBBF24]" />
-            <h3 className="text-sm font-bold text-[#E5E9F0] uppercase tracking-wider">
-              {reporteZ ? "Reporte Z — Cierre Oficial de Turno" : "Arqueo Ciego de Caja"}
+        <div className="h-12 px-4 bg-[#14171D] border-b border-[#262B36] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2">
+            <Lock className="w-4 h-4 text-[#F59E0B]" strokeWidth={1.75} />
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#E5E9F0]">
+              {reporteZ ? "REPORTE Z — CIERRE OFICIAL DE TURNO" : "ARQUEO CIEGO DE CAJA"}
             </h3>
           </div>
           <button
             onClick={onClose}
-            className="text-[#94A3B8] hover:text-[#E5E9F0] p-1.5 rounded-lg hover:bg-[#21252D] transition-colors cursor-pointer"
+            className="text-[#7D8597] hover:text-[#E5E9F0] p-1 rounded hover:bg-[#1E222B] transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Contenido */}
-        <div className="p-5 overflow-y-auto space-y-4 flex-1 bg-[#1C1F26]">
+        <div className="p-4 overflow-y-auto space-y-3.5 flex-1 bg-[#14171D]">
           {!reporteZ ? (
             /* PASO 1: CONTEO CIEGO */
-            <div className="space-y-4">
-              <div className="bg-[#21252D] border border-[#2E3440] rounded-xl p-4 text-xs text-[#E5E9F0]">
-                <div className="font-semibold text-xs text-[#FBBF24] flex items-center gap-1.5 mb-1.5">
-                  <ShieldCheck className="w-4 h-4 text-[#FBBF24]" />
-                  <span>Conteo a Ciegas (Cero Sesgo)</span>
+            <div className="space-y-3">
+              <div className="bg-[#1E222B] border border-[#2D3340] rounded-lg p-3 text-xs text-[#E5E9F0]">
+                <div className="font-semibold text-xs text-[#F59E0B] flex items-center gap-1.5 mb-1">
+                  <ShieldCheck className="w-4 h-4 text-[#F59E0B]" strokeWidth={1.75} />
+                  <span>Procedimiento de Auditoría Ciega</span>
                 </div>
-                <p className="text-[#94A3B8] leading-relaxed">
-                  El sistema oculta el saldo esperado para garantizar máxima honestidad. Cuenta los
+                <p className="text-[#7D8597] text-[11px] leading-relaxed">
+                  El sistema oculta el saldo esperado para garantizar máxima integridad. Cuenta los
                   billetes físicos del cajón e ingresa el monto total exacto.
                 </p>
               </div>
 
               <div>
-                <label className="text-xs font-bold uppercase tracking-wider text-[#94A3B8] block mb-2">
-                  Efectivo Físico Contado en Cajón (Bs.)
+                <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block mb-1.5">
+                  EFECTIVO FÍSICO CONTADO EN CAJÓN (BS.)
                 </label>
                 <input
                   type="number"
-                  placeholder="Bs. 0.00"
+                  placeholder="0.00"
                   value={montoContadoStr}
                   onChange={(e) => setMontoContadoStr(e.target.value)}
-                  className="w-full h-14 bg-[#16181D] border border-[#2E3440] text-[#34D399] text-2xl font-bold font-mono rounded-xl px-4 text-center focus:outline-none focus:border-[#34D399]/60 tabular-nums transition-colors"
+                  className="w-full h-11 bg-[#12151A] border border-[#2D3340] text-[#34D399] text-xl font-bold font-mono rounded-lg px-4 text-center focus:outline-none focus:border-[#3B4252] tabular-nums"
                 />
               </div>
 
               <button
                 disabled={isClosing || !montoContadoStr}
                 onClick={handleCerrar}
-                className="w-full h-12 bg-[#34D399] hover:bg-[#10B981] disabled:opacity-40 text-[#16181D] font-bold text-xs uppercase tracking-wider rounded-xl transition-all duration-75 cursor-pointer flex items-center justify-center gap-2"
+                className="w-full h-11 bg-[#10B981] hover:bg-[#059669] disabled:opacity-40 text-[#0B0F14] font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-75 cursor-pointer flex items-center justify-center gap-1.5"
               >
-                <CheckCircle2 className="w-4 h-4" />
-                <span>{isClosing ? "Calculando..." : "Confirmar Conteo y Emitir Reporte Z"}</span>
+                <Check className="w-4 h-4 text-[#0B0F14]" strokeWidth={2} />
+                <span>{isClosing ? "Verificando..." : "Confirmar Conteo y Emitir Reporte Z"}</span>
               </button>
             </div>
           ) : (
             /* PASO 2: TICKET MAESTRO DEL DÍA (REPORTE Z) */
             <div className="space-y-3 font-mono text-xs">
-              <div className="bg-[#21252D] border border-[#2E3440] text-[#E5E9F0] rounded-lg p-4 font-mono text-xs shadow-lg">
-                <div className="text-center pb-2.5 mb-2.5 border-b border-dashed border-[#2E3440]">
-                  <h4 className="font-bold text-sm text-[#FBBF24]">POS EBEN EZER</h4>
-                  <p className="text-[11px] text-[#94A3B8] tracking-wider">TICKET MAESTRO DEL DÍA (REPORTE Z)</p>
-                  <p className="text-[10px] text-[#94A3B8] mt-0.5 tabular-nums">
+              <div className="bg-[#1E222B] border border-[#2D3340] text-[#E5E9F0] rounded-lg p-3.5 shadow-sm">
+                <div className="text-center pb-2 mb-2 border-b border-dashed border-[#262B36]">
+                  <h4 className="font-bold text-xs text-[#E5E9F0]">EBEN EZER POS</h4>
+                  <p className="text-[10px] text-[#7D8597] tracking-wider uppercase">REPORTE Z — CIERRE DIARIO</p>
+                  <p className="text-[10px] text-[#646E82] mt-0.5 tabular-nums">
                     Cierre: {new Date(reporteZ.fechaCierre).toLocaleString()}
                   </p>
                 </div>
 
                 {/* Cuadre de Efectivo */}
-                <div className="space-y-1.5 pb-2.5 mb-2.5 border-b border-dashed border-[#2E3440] tabular-nums">
+                <div className="space-y-1 pb-2 mb-2 border-b border-dashed border-[#262B36] tabular-nums text-[11px]">
                   <div className="flex justify-between">
-                    <span className="text-[#94A3B8]">Fondo Inicial:</span>
+                    <span className="text-[#7D8597]">Fondo Inicial:</span>
                     <span className="font-semibold text-[#E5E9F0]">Bs. {reporteZ.fondoInicialEfectivo.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-[#94A3B8]">
+                  <div className="flex justify-between text-[#7D8597]">
                     <span>Efectivo Esperado en Sistema:</span>
                     <span className="font-semibold text-[#E5E9F0]">Bs. {reporteZ.saldoEfectivoEsperado.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-sm text-[#E5E9F0] pt-1">
+                  <div className="flex justify-between font-bold text-xs text-[#E5E9F0] pt-0.5">
                     <span>Efectivo Físico Contado:</span>
                     <span className="text-[#34D399]">Bs. {reporteZ.efectivoContadoCiego.toFixed(2)}</span>
                   </div>
 
                   <div
-                    className={`flex justify-between font-bold text-xs p-2 rounded-lg mt-1.5 ${
+                    className={`flex justify-between font-bold text-[11px] p-1.5 rounded mt-1.5 ${
                       Math.abs(reporteZ.diferenciaEfectivo) < 0.01
-                        ? "bg-[rgba(16,185,129,0.14)] text-[#34D399] border border-[rgba(16,185,129,0.35)]"
+                        ? "bg-[#1A2421] text-[#34D399] border border-[#10B981]/30"
                         : reporteZ.diferenciaEfectivo > 0
-                        ? "bg-[rgba(56,189,248,0.14)] text-[#38BDF8] border border-[rgba(56,189,248,0.35)]"
-                        : "bg-[rgba(244,63,94,0.14)] text-[#FB7185] border border-[rgba(244,63,94,0.35)]"
+                        ? "bg-[#15232D] text-[#38BDF8] border border-[#0284C7]/30"
+                        : "bg-[rgba(244,63,94,0.12)] text-[#FB7185] border border-[rgba(244,63,94,0.3)]"
                     }`}
                   >
                     <span>
@@ -173,24 +173,24 @@ export function CierreCajaModal({
                 </div>
 
                 {/* Resumen Digital QR */}
-                <div className="space-y-1 pb-2.5 mb-2.5 border-b border-dashed border-[#2E3440] tabular-nums">
-                  <div className="flex justify-between font-semibold text-[#38BDF8]">
+                <div className="space-y-1 pb-2 mb-2 border-b border-dashed border-[#262B36] tabular-nums text-[11px]">
+                  <div className="flex justify-between text-[#38BDF8]">
                     <span>Acumulado QR / Banco:</span>
-                    <span>Bs. {reporteZ.saldoQrAcumulado.toFixed(2)}</span>
+                    <span className="font-semibold">Bs. {reporteZ.saldoQrAcumulado.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between font-bold text-[#FBBF24] pt-1 border-t border-[#2E3440]">
-                    <span>VENTAS TOTALES DEL TURNO:</span>
+                  <div className="flex justify-between font-bold text-[#E5E9F0] pt-1 border-t border-[#262B36]">
+                    <span>TOTAL FACTURADO TURNO:</span>
                     <span>Bs. {reporteZ.totalRecaudadoGeneral.toFixed(2)}</span>
                   </div>
-                  <div className="text-[10px] text-[#94A3B8]">
-                    {reporteZ.totalVentasRealizadas} tickets emitidos
+                  <div className="text-[10px] text-[#646E82]">
+                    {reporteZ.totalVentasRealizadas} transacciones registradas
                   </div>
                 </div>
 
                 {/* Métricas de Inteligencia: Platos vs Extras */}
-                <div className="space-y-1 pb-2.5 mb-2.5 border-b border-dashed border-[#2E3440] text-[11px] tabular-nums">
-                  <div className="font-semibold text-[#E5E9F0]">Métricas de Facturación:</div>
-                  <div className="flex justify-between text-[#94A3B8]">
+                <div className="space-y-0.5 pb-2 mb-2 border-b border-dashed border-[#262B36] text-[11px] tabular-nums">
+                  <div className="text-[#7D8597]">Desglose Comercial:</div>
+                  <div className="flex justify-between text-[#7D8597]">
                     <span>Platos Base:</span>
                     <span>Bs. {reporteZ.totalPlatosBase.toFixed(2)}</span>
                   </div>
@@ -203,16 +203,16 @@ export function CierreCajaModal({
                 {/* Top 5 Productos */}
                 {reporteZ.top5Productos.length > 0 && (
                   <div>
-                    <div className="font-bold text-[#FBBF24] mb-1.5 text-[11px]">
-                      ⭐ Top 5 Más Vendidos:
+                    <div className="font-semibold text-[#7D8597] mb-1 text-[10px] uppercase tracking-wider">
+                      TOP 5 PRODUCTOS:
                     </div>
-                    <div className="space-y-1 text-[11px] tabular-nums">
+                    <div className="space-y-0.5 text-[11px] tabular-nums">
                       {reporteZ.top5Productos.map((p, i) => (
-                        <div key={i} className="flex justify-between text-[#94A3B8]">
+                        <div key={i} className="flex justify-between text-[#7D8597]">
                           <span>
                             {i + 1}. {p.nombre} (x{p.cantidad})
                           </span>
-                          <span className="font-semibold text-[#E5E9F0]">Bs. {p.total.toFixed(2)}</span>
+                          <span className="font-medium text-[#E5E9F0]">Bs. {p.total.toFixed(2)}</span>
                         </div>
                       ))}
                     </div>
@@ -221,22 +221,22 @@ export function CierreCajaModal({
               </div>
 
               {/* Botón de Siguiente Turno */}
-              <div className="bg-[#21252D] p-3.5 rounded-xl border border-[#2E3440] space-y-2">
-                <span className="text-xs font-medium text-[#94A3B8] block">
-                  Aperturar Siguiente Turno (Fondo Inicial en Bs.):
+              <div className="bg-[#1E222B] p-3 rounded-lg border border-[#2D3340] space-y-2">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block">
+                  APERTURA DE NUEVO TURNO (FONDO BS.):
                 </span>
                 <div className="flex gap-2">
                   <input
                     type="number"
                     value={nuevoFondoStr}
                     onChange={(e) => setNuevoFondoStr(e.target.value)}
-                    className="w-28 h-10 bg-[#16181D] border border-[#2E3440] text-[#FBBF24] font-bold font-mono text-sm px-3 rounded-lg text-center tabular-nums focus:outline-none focus:border-[#FBBF24]/60"
+                    className="w-24 h-9 bg-[#12151A] border border-[#2D3340] text-[#E5E9F0] font-bold font-mono text-xs px-2.5 rounded text-center tabular-nums focus:outline-none focus:border-[#3B4252]"
                   />
                   <button
                     onClick={handleNuevoTurno}
-                    className="flex-1 h-10 bg-[#FBBF24] hover:bg-[#F59E0B] text-[#16181D] font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-75 cursor-pointer"
+                    className="flex-1 h-9 bg-[#10B981] hover:bg-[#059669] text-[#0B0F14] font-bold text-xs uppercase tracking-wider rounded transition-all duration-75 cursor-pointer"
                   >
-                    Iniciar Turno
+                    Iniciar Nuevo Turno
                   </button>
                 </div>
               </div>

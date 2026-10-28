@@ -295,7 +295,7 @@ export function PosLayout({ initialData }: PosLayoutProps) {
     initialData.usuarios.find((u) => u.id === turno?.cajeraId)?.nombre || "Laura (Cajera)";
 
   return (
-    <div className="h-screen w-screen flex flex-col bg-[#16181D] overflow-hidden text-[#E5E9F0] font-sans">
+    <div className="h-screen w-screen flex flex-col bg-[#14171D] overflow-hidden text-[#E5E9F0] font-sans">
       {/* 1. BARRA SUPERIOR DE ESTADO ("LOS DOS BOLSILLOS DIGITALES") */}
       <HeaderBolsillos
         saldoEfectivo={turno?.saldoEfectivoEsperado || 0}

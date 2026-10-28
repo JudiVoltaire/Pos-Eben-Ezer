@@ -37,57 +37,61 @@ export function BarraExtras({
   };
 
   return (
-    <div className="bg-[#1C1F26] border-t border-[#2E3440] p-3 space-y-2.5 select-none shrink-0">
+    <div
+      className={`bg-[#161920] border-t border-[#262B36] p-3 space-y-2 select-none shrink-0 transition-opacity duration-75 ${
+        !hasItemSelected ? "opacity-40 pointer-events-none" : "opacity-100"
+      }`}
+    >
       {/* Indicador contextual de ítem activo */}
-      <div className="flex items-center justify-between text-xs">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <PlusCircle className="w-4 h-4 text-[#34D399]" />
-          <span className="font-bold text-[#E5E9F0] tracking-wide">
-            ADICIONALES Y EXTRAS
+          <PlusCircle className="w-3.5 h-3.5 text-[#10B981]" strokeWidth={1.75} />
+          <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D8597]">
+            {selectedItemNombre ? (
+              <>
+                APLICANDO ADICIONAL A:{" "}
+                <span className="text-[#34D399] normal-case font-bold">{selectedItemNombre}</span>
+              </>
+            ) : (
+              "ADICIONALES DE ORDEN"
+            )}
           </span>
-          {hasItemSelected && selectedItemNombre && (
-            <span className="text-[#34D399] font-medium bg-[rgba(16,185,129,0.14)] px-2 py-0.5 rounded-md border border-[rgba(16,185,129,0.3)] text-[11px]">
-              Aplicando a: {selectedItemNombre}
-            </span>
-          )}
         </div>
-        <span className="text-[11px] text-[#94A3B8]">
-          Regla: Suma hacia arriba inmutable
+        <span className="text-[10px] text-[#646E82] font-mono">
+          INCREMENTAL · INMUTABLE
         </span>
       </div>
 
-      {/* Fila 1: Toppings Fijos de 1 Toque */}
-      <div className="flex flex-wrap gap-2">
+      {/* Fila 1: Toppings Fijos */}
+      <div className="flex flex-wrap gap-1.5">
         {toppingsFijos.map((top) => (
           <button
             key={top.id}
-            disabled={!hasItemSelected}
             onClick={() => onAddToppingFijo(top)}
-            className="h-10 px-3.5 rounded-lg bg-[#21252D] border border-[#2E3440] text-sm text-[#E5E9F0] hover:border-[#34D399]/50 hover:bg-[#2A303C] active:scale-[0.97] transition-all duration-75 flex items-center gap-2 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="h-8 px-2.5 rounded-md bg-[#1E222B] border border-[#2D3340] text-xs font-medium text-[#E5E9F0] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] hover:border-[#10B981]/50 hover:bg-[#252A35] active:translate-y-[1px] transition-all duration-75 flex items-center gap-1.5 cursor-pointer"
           >
             <span>+ {top.nombre}</span>
-            <span className="font-bold font-mono tabular-nums text-[#34D399]">
-              Bs. {top.precio.toFixed(2)}
+            <span className="font-mono text-[11px] font-semibold text-[#34D399] tabular-nums">
+              +Bs. {top.precio.toFixed(2)}
             </span>
           </button>
         ))}
       </div>
 
-      {/* Fila 2: Comodín de Cocina (Extra Libre Impredecible) */}
-      <div className="pt-2 border-t border-[#2E3440] flex flex-wrap items-center gap-2">
-        <div className="text-xs font-bold text-[#FBBF24] flex items-center gap-1.5 uppercase tracking-wider shrink-0">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>Comodín Cocina:</span>
+      {/* Fila 2: Comodín de Cocina (Segmented Control Group) */}
+      <div className="pt-1.5 border-t border-[#262B36] flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] shrink-0">
+          <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" strokeWidth={1.75} />
+          <span>COMODÍN:</span>
         </div>
 
-        {/* Botones sumatorios rápidos de un toque */}
-        <div className="flex items-center gap-1.5">
+        {/* Grupo de sumas rápidas */}
+        <div className="flex items-center gap-1 bg-[#12151A] p-0.5 rounded-md border border-[#262B36]">
           {[2, 5, 10].map((monto) => (
             <button
               key={monto}
-              disabled={!hasItemSelected}
               onClick={() => handleSumar(monto)}
-              className="h-10 px-3 rounded-lg bg-[#21252D] border border-[#2E3440] hover:border-[#FBBF24]/50 hover:bg-[#2A303C] active:scale-[0.97] text-sm font-bold font-mono tabular-nums text-[#FBBF24] transition-all duration-75 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              className="h-7 px-2.5 rounded text-xs font-mono font-semibold text-[#E5E9F0] hover:bg-[#252A35] hover:text-[#F59E0B] active:translate-y-[1px] transition-all duration-75 cursor-pointer tabular-nums"
             >
               +Bs. {monto}
             </button>
@@ -95,27 +99,25 @@ export function BarraExtras({
         </div>
 
         {/* Campo de nota corta opcional y monto personalizado */}
-        <div className="flex-1 flex items-center gap-2 min-w-[240px]">
+        <div className="flex-1 flex items-center gap-1.5 min-w-[220px]">
           <input
             type="text"
-            placeholder="Nota opcional: ej. Extra Palta / Ahogado..."
+            placeholder="Nota: ej. Extra Palta / Ahogado..."
             value={notaLibre}
             onChange={(e) => setNotaLibre(e.target.value)}
-            disabled={!hasItemSelected}
-            className="bg-[#16181D] border border-[#2E3440] text-[#E5E9F0] placeholder-[#94A3B8] text-sm rounded-lg px-3 h-10 flex-1 focus:outline-none focus:border-[#FBBF24]/60 transition-colors disabled:opacity-40"
+            className="h-8 bg-[#12151A] border border-[#2D3340] rounded-md px-2.5 text-xs text-[#E5E9F0] placeholder-[#646E82] flex-1 focus:outline-none focus:border-[#3B4252] transition-colors"
           />
           <input
             type="number"
             placeholder="Bs."
             value={montoCustom}
             onChange={(e) => setMontoCustom(e.target.value)}
-            disabled={!hasItemSelected}
-            className="w-20 bg-[#16181D] border border-[#2E3440] text-[#FBBF24] font-mono tabular-nums font-bold text-sm rounded-lg px-2.5 h-10 text-center focus:outline-none focus:border-[#FBBF24]/60 transition-colors disabled:opacity-40"
+            className="h-8 w-16 bg-[#12151A] border border-[#2D3340] text-[#F59E0B] font-mono tabular-nums text-xs font-semibold rounded-md px-2 text-center focus:outline-none focus:border-[#3B4252] transition-colors"
           />
           <button
-            disabled={!hasItemSelected || !montoCustom}
+            disabled={!montoCustom}
             onClick={() => handleSumar(parseFloat(montoCustom) || 0)}
-            className="h-10 px-4 rounded-lg bg-[#21252D] border border-[#2E3440] hover:border-[#FBBF24] text-sm font-bold text-[#FBBF24] hover:bg-[#2A303C] active:scale-[0.97] transition-all duration-75 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="h-8 px-3 rounded-md bg-[#1E222B] border border-[#2D3340] hover:border-[#F59E0B]/60 text-xs font-semibold text-[#F59E0B] hover:bg-[#252A35] active:translate-y-[1px] transition-all duration-75 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Sumar
           </button>

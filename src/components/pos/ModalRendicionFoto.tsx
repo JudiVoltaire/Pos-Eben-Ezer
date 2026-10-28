@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { X, Camera, CheckCircle2 } from "lucide-react";
+import { X, Camera, Check } from "lucide-react";
 
 interface MovimientoPendiente {
   id: string;
@@ -57,24 +57,24 @@ export function ModalRendicionFoto({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#16181D]/80 backdrop-blur-sm flex items-center justify-center p-3 select-none">
-      <div className="bg-[#1C1F26] border border-[#2E3440] rounded-2xl w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 bg-[#14171D]/80 backdrop-blur-sm flex items-center justify-center p-3 select-none">
+      <div className="bg-[#161920] border border-[#262B36] rounded-lg w-full max-w-lg shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
         {/* Encabezado */}
-        <div className="h-14 px-5 bg-[#16181D] border-b border-[#2E3440] flex items-center justify-between shrink-0">
-          <div className="flex items-center gap-2.5">
-            <Camera className="w-5 h-5 text-[#FB7185]" />
-            <h3 className="text-sm font-bold text-[#E5E9F0] uppercase tracking-wider">
-              Rendiciones Fotográficas (Cero Papel)
+        <div className="h-12 px-4 bg-[#14171D] border-b border-[#262B36] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-2">
+            <Camera className="w-4 h-4 text-[#FB7185]" strokeWidth={1.75} />
+            <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#E5E9F0]">
+              RENDICIÓN FOTOGRÁFICA DE COMPROBANTES
             </h3>
-            <span className="bg-[rgba(244,63,94,0.14)] text-[#FB7185] text-xs font-mono font-bold px-2 py-0.5 rounded-md border border-[rgba(244,63,94,0.35)] tabular-nums">
+            <span className="bg-[rgba(244,63,94,0.12)] text-[#FB7185] text-[10px] font-mono font-bold px-1.5 py-0.2 rounded border border-[rgba(244,63,94,0.3)] tabular-nums">
               {pendientes.length} pendientes
             </span>
           </div>
           <button
             onClick={onClose}
-            className="text-[#94A3B8] hover:text-[#E5E9F0] p-1.5 rounded-lg hover:bg-[#21252D] transition-colors cursor-pointer"
+            className="text-[#7D8597] hover:text-[#E5E9F0] p-1 rounded hover:bg-[#1E222B] transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4" />
           </button>
         </div>
 
@@ -89,15 +89,15 @@ export function ModalRendicionFoto({
         />
 
         {/* Lista de gastos */}
-        <div className="p-4 overflow-y-auto space-y-2.5 flex-1 bg-[#1C1F26]">
+        <div className="p-4 overflow-y-auto space-y-2 flex-1 bg-[#14171D]">
           {pendientes.length === 0 ? (
-            <div className="py-12 text-center text-[#94A3B8]">
-              <CheckCircle2 className="w-10 h-10 mx-auto text-[#34D399] mb-2" />
+            <div className="py-12 text-center text-[#646E82]">
+              <Check className="w-8 h-8 mx-auto text-[#10B981] mb-2" strokeWidth={1.75} />
               <p className="text-xs font-semibold text-[#E5E9F0]">
-                ¡Cero gastos pendientes!
+                Sin gastos pendientes de comprobante
               </p>
-              <p className="text-xs text-[#94A3B8] mt-1">
-                Todas las compras de insumos del turno ya tienen comprobante fotográfico.
+              <p className="text-[11px] text-[#7D8597] mt-0.5">
+                Todas las compras registradas en el turno cuentan con foto de respaldo.
               </p>
             </div>
           ) : (
@@ -106,23 +106,23 @@ export function ModalRendicionFoto({
               return (
                 <div
                   key={mov.id}
-                  className={`p-3.5 rounded-xl border transition-all duration-75 ${
+                  className={`p-3 rounded-lg border transition-all duration-75 ${
                     isSelected
-                      ? "bg-[#21252D] border-[#FBBF24] shadow-md"
-                      : "bg-[#21252D] border-[#2E3440] hover:bg-[#2A303C]"
+                      ? "bg-[#232834] border-[#F59E0B]"
+                      : "bg-[#1E222B] border-[#2D3340] hover:bg-[#252A35]"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <div className="font-semibold text-xs text-[#E5E9F0]">
+                      <div className="font-medium text-xs text-[#E5E9F0]">
                         {mov.motivo}
                       </div>
-                      <div className="text-[11px] text-[#94A3B8] mt-1 tabular-nums">
-                        Bolsillo: <span className="font-medium text-[#E5E9F0]">{mov.bolsillo}</span> •{" "}
+                      <div className="text-[11px] text-[#7D8597] mt-0.5 tabular-nums">
+                        Bolsillo: <span className="font-medium text-[#C5CBD6]">{mov.bolsillo}</span> ·{" "}
                         {mov.fechaHora ? new Date(mov.fechaHora).toLocaleTimeString() : ""}
                       </div>
                       {mov.notaOpcional && (
-                        <p className="text-[11px] text-[#FBBF24] italic mt-0.5">
+                        <p className="text-[11px] text-[#7D8597] italic mt-0.5">
                           "{mov.notaOpcional}"
                         </p>
                       )}
@@ -138,9 +138,9 @@ export function ModalRendicionFoto({
                           setPreview(null);
                           fileInputRef.current?.click();
                         }}
-                        className="mt-1.5 h-8 px-2.5 rounded-lg bg-[#21252D] hover:bg-[#2A303C] border border-[#2E3440] hover:border-[#FBBF24]/50 text-[#E5E9F0] text-xs font-medium transition-all duration-75 cursor-pointer flex items-center gap-1.5"
+                        className="mt-1 h-7 px-2.5 rounded bg-[#1E222B] hover:bg-[#252A35] border border-[#2D3340] text-[#E5E9F0] text-xs font-medium transition-all duration-75 cursor-pointer flex items-center gap-1.5"
                       >
-                        <Camera className="w-3.5 h-3.5 text-[#FBBF24]" />
+                        <Camera className="w-3 h-3 text-[#F59E0B]" strokeWidth={1.75} />
                         <span>Foto</span>
                       </button>
                     </div>
@@ -148,8 +148,8 @@ export function ModalRendicionFoto({
 
                   {/* Previsualización */}
                   {isSelected && preview && (
-                    <div className="mt-3 pt-3 border-t border-[#2E3440] flex flex-col items-center">
-                      <div className="w-full max-h-44 rounded-xl overflow-hidden border border-[#2E3440] mb-2.5 bg-[#16181D]">
+                    <div className="mt-2.5 pt-2.5 border-t border-[#262B36] flex flex-col items-center">
+                      <div className="w-full max-h-40 rounded-lg overflow-hidden border border-[#262B36] mb-2 bg-[#12151A]">
                         <img
                           src={preview}
                           alt="Recibo"
@@ -159,16 +159,17 @@ export function ModalRendicionFoto({
                       <div className="flex gap-2 w-full">
                         <button
                           onClick={() => setPreview(null)}
-                          className="flex-1 h-9 bg-[#21252D] hover:bg-[#2A303C] text-[#E5E9F0] text-xs font-medium rounded-lg border border-[#2E3440] transition-colors"
+                          className="flex-1 h-8 bg-[#1E222B] hover:bg-[#252A35] text-[#C5CBD6] text-xs font-medium rounded border border-[#2D3340] transition-colors"
                         >
                           Repetir
                         </button>
                         <button
                           disabled={isSaving}
                           onClick={handleConfirmar}
-                          className="flex-2 h-9 bg-[#34D399] hover:bg-[#10B981] text-[#16181D] text-xs font-bold rounded-lg transition-colors flex items-center justify-center"
+                          className="flex-2 h-8 bg-[#10B981] hover:bg-[#059669] text-[#0B0F14] text-xs font-bold uppercase tracking-wider rounded transition-colors flex items-center justify-center gap-1"
                         >
-                          {isSaving ? "Guardando..." : "Confirmar Respaldo"}
+                          <Check className="w-3.5 h-3.5" strokeWidth={2} />
+                          <span>{isSaving ? "Guardando..." : "Confirmar Respaldo"}</span>
                         </button>
                       </div>
                     </div>
@@ -180,10 +181,10 @@ export function ModalRendicionFoto({
         </div>
 
         {/* Pie */}
-        <div className="h-14 px-5 bg-[#16181D] border-t border-[#2E3440] flex justify-end items-center shrink-0">
+        <div className="h-12 px-4 bg-[#14171D] border-t border-[#262B36] flex justify-end items-center shrink-0">
           <button
             onClick={onClose}
-            className="h-9 px-4 bg-[#21252D] hover:bg-[#2A303C] text-[#E5E9F0] font-medium text-xs rounded-xl border border-[#2E3440] transition-colors cursor-pointer"
+            className="h-8 px-3.5 bg-[#1E222B] hover:bg-[#252A35] text-[#C5CBD6] hover:text-[#E5E9F0] font-medium text-xs rounded-lg border border-[#2D3340] transition-colors cursor-pointer"
           >
             Cerrar
           </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { ArrowDownCircle, Receipt, Camera, LockKeyhole, Store, Banknote, QrCode } from "lucide-react";
+import { ArrowUpRight, Receipt, Camera, Lock } from "lucide-react";
 
 interface HeaderBolsillosProps {
   saldoEfectivo: number;
@@ -25,84 +25,78 @@ export function HeaderBolsillos({
   onOpenCierreCiego,
 }: HeaderBolsillosProps) {
   return (
-    <header className="h-16 px-5 bg-[#1C1F26] border-b border-[#2E3440] flex items-center justify-between gap-4 select-none shrink-0 z-20">
-      {/* 1. Identidad de Marca y Cajera */}
+    <header className="h-14 px-4 bg-[#14171D] border-b border-[#262B36] flex items-center justify-between gap-4 select-none shrink-0 z-20">
+      {/* 1. Identidad Izquierda */}
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-[#21252D] border border-[#2E3440] flex items-center justify-center font-bold text-[#FBBF24]">
-          <Store className="w-5 h-5 text-[#FBBF24]" />
-        </div>
-        <div>
-          <h1 className="text-sm font-extrabold tracking-tight leading-none text-[#E5E9F0]">
-            POS EBEN EZER
-          </h1>
-          <p className="text-xs text-[#94A3B8] font-medium mt-1">
-            Caja: <span className="text-[#E5E9F0] font-semibold">{cajeraNombre}</span>
-          </p>
-        </div>
+        <div className="w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_#10B981] shrink-0" />
+        <span className="text-sm font-semibold tracking-tight text-[#E5E9F0]">
+          Eben Ezer POS
+        </span>
+        <div className="h-4 w-[1px] bg-[#262B36]" />
+        <span className="text-xs text-[#7D8597] font-medium">
+          Turno Activo · <span className="text-[#C5CBD6]">{cajeraNombre}</span>
+        </span>
       </div>
 
-      {/* 2. Indicadores Centrales de los "Dos Bolsillos Digitales" */}
-      <div className="flex items-center gap-3">
-        {/* Bolsillo 1: Caja Física (Efectivo en Cajón) - Verde Salvia */}
-        <div className="h-11 px-4 rounded-xl bg-[rgba(16,185,129,0.14)] border border-[rgba(16,185,129,0.35)] flex items-center gap-3 transition-colors">
-          <Banknote className="w-5 h-5 text-[#34D399] shrink-0" />
-          <div className="flex flex-col justify-center">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] leading-none">
-              CAJA FÍSICA (CAJÓN)
-            </span>
-            <span className="text-lg font-bold font-mono tabular-nums text-[#34D399] leading-tight mt-0.5">
-              Bs. {saldoEfectivo.toFixed(2)}
-            </span>
+      {/* 2. Módulos Centrales de Tesorería (Financial Ticker) */}
+      <div className="bg-[#1A1D24] border border-[#262B36] rounded-lg px-3.5 py-1.5 flex items-center gap-6 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]">
+        {/* Celda 1: Caja Física */}
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#10B981] shrink-0" />
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#7D8597]">
+            CAJA FÍSICA
+          </span>
+          <div className="text-sm font-bold font-mono tabular-nums text-[#E5E9F0] ml-1">
+            <span className="text-xs font-normal text-[#34D399] mr-1">Bs.</span>
+            {saldoEfectivo.toFixed(2)}
           </div>
         </div>
 
-        {/* Bolsillo 2: Caja Digital (QR / Banco) - Azul Acero */}
-        <div className="h-11 px-4 rounded-xl bg-[rgba(56,189,248,0.14)] border border-[rgba(56,189,248,0.35)] flex items-center gap-3 transition-colors">
-          <QrCode className="w-5 h-5 text-[#38BDF8] shrink-0" />
-          <div className="flex flex-col justify-center">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#94A3B8] leading-none">
-              CAJA DIGITAL (QR / BANCO)
-            </span>
-            <span className="text-lg font-bold font-mono tabular-nums text-[#38BDF8] leading-tight mt-0.5">
-              Bs. {saldoQr.toFixed(2)}
-            </span>
+        {/* Separador vertical */}
+        <div className="h-5 w-[1px] bg-[#262B36]" />
+
+        {/* Celda 2: Caja QR / Banco */}
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-[#38BDF8] shrink-0" />
+          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#7D8597]">
+            CAJA QR / BANCO
+          </span>
+          <div className="text-sm font-bold font-mono tabular-nums text-[#E5E9F0] ml-1">
+            <span className="text-xs font-normal text-[#38BDF8] mr-1">Bs.</span>
+            {saldoQr.toFixed(2)}
           </div>
         </div>
       </div>
 
-      {/* 3. Botones de Acción Derecha */}
+      {/* 3. Barra de Herramientas Derecha */}
       <div className="flex items-center gap-2">
-        {/* Botón Salida / Retiro (Terracota Suave) */}
+        {/* Botón Salida / Retiro */}
         <button
           onClick={onOpenSalida}
-          className="h-10 px-3.5 rounded-lg bg-[rgba(244,63,94,0.14)] border border-[rgba(244,63,94,0.35)] text-sm font-medium text-[#FB7185] hover:bg-[rgba(244,63,94,0.22)] active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer"
+          className="h-9 px-3 rounded-lg bg-[#1E222B] border border-[#2D3340] text-xs font-medium text-[#C5CBD6] hover:text-[#E5E9F0] hover:border-[#3B4252] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0_1px_2px_0_rgba(0,0,0,0.25)] active:translate-y-[1px] flex items-center gap-1.5 transition-all cursor-pointer"
         >
-          <ArrowDownCircle className="w-4 h-4 text-[#FB7185]" />
-          <span>Salida / Retiro</span>
+          <ArrowUpRight className="w-4 h-4 text-[#FB7185]" strokeWidth={1.75} />
+          <span>Registrar Salida</span>
         </button>
 
         {/* Botón Cinta Testigo */}
         <button
           onClick={onOpenCintaTestigo}
-          className="h-10 px-3.5 rounded-lg bg-[#21252D] border border-[#2E3440] text-sm font-medium text-[#E5E9F0] hover:bg-[#2A303C] active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer"
+          className="h-9 px-3 rounded-lg bg-[#1E222B] border border-[#2D3340] text-xs font-medium text-[#C5CBD6] hover:text-[#E5E9F0] hover:border-[#3B4252] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0_1px_2px_0_rgba(0,0,0,0.25)] active:translate-y-[1px] flex items-center gap-1.5 transition-all cursor-pointer"
         >
-          <Receipt className="w-4 h-4 text-[#94A3B8]" />
+          <Receipt className="w-4 h-4 text-[#7D8597]" strokeWidth={1.75} />
           <span>Cinta Testigo</span>
         </button>
 
         {/* Botón Rendición Foto con Badge */}
         <button
           onClick={onOpenPendientes}
-          className={`h-10 px-3.5 rounded-lg border text-sm font-medium active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer ${
-            pendientesCount > 0
-              ? "bg-[rgba(244,63,94,0.14)] border-[rgba(244,63,94,0.35)] text-[#FB7185] hover:bg-[rgba(244,63,94,0.22)]"
-              : "bg-[#21252D] border-[#2E3440] text-[#E5E9F0] hover:bg-[#2A303C]"
-          }`}
+          className="h-9 px-3 rounded-lg bg-[#1E222B] border border-[#2D3340] text-xs font-medium text-[#C5CBD6] hover:text-[#E5E9F0] hover:border-[#3B4252] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0_1px_2px_0_rgba(0,0,0,0.25)] active:translate-y-[1px] flex items-center gap-1.5 transition-all cursor-pointer"
         >
-          <Camera className={`w-4 h-4 ${pendientesCount > 0 ? "text-[#FB7185]" : "text-[#94A3B8]"}`} />
-          <span>Rendición Foto</span>
+          <Camera className={`w-4 h-4 ${pendientesCount > 0 ? "text-[#FB7185]" : "text-[#7D8597]"}`} strokeWidth={1.75} />
+          <span>Rendición</span>
           {pendientesCount > 0 && (
-            <span className="h-5 px-1.5 rounded-md bg-[rgba(244,63,94,0.25)] border border-[rgba(244,63,94,0.45)] text-[#FB7185] text-xs font-mono tabular-nums font-bold flex items-center justify-center">
+            <span className="h-4 px-1.5 rounded-full bg-[rgba(244,63,94,0.18)] border border-[rgba(244,63,94,0.35)] text-[#FB7185] text-[10px] font-mono tabular-nums font-semibold flex items-center justify-center">
               {pendientesCount}
             </span>
           )}
@@ -111,9 +105,9 @@ export function HeaderBolsillos({
         {/* Botón Cierre Ciego */}
         <button
           onClick={onOpenCierreCiego}
-          className="h-10 px-3.5 rounded-lg bg-[#21252D] border border-[#2E3440] text-sm font-medium text-[#E5E9F0] hover:bg-[#2A303C] active:scale-[0.98] transition-all duration-75 flex items-center gap-2 cursor-pointer"
+          className="h-9 px-3 rounded-lg bg-[#1E222B] border border-[#2D3340] text-xs font-medium text-[#C5CBD6] hover:text-[#E5E9F0] hover:border-[#3B4252] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0_1px_2px_0_rgba(0,0,0,0.25)] active:translate-y-[1px] flex items-center gap-1.5 transition-all cursor-pointer"
         >
-          <LockKeyhole className="w-4 h-4 text-[#94A3B8]" />
+          <Lock className="w-4 h-4 text-[#7D8597]" strokeWidth={1.75} />
           <span>Cierre Ciego</span>
         </button>
       </div>
