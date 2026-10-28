@@ -100,7 +100,7 @@ export async function abrirTurno(cajeraId: string, fondoInicialEfectivo: number)
 export async function cerrarTurnoCaja(turnoId: string, efectivoContadoCiego: number) {
   try {
     const turno = (await db.select().from(turnosCaja).where(eq(turnosCaja.id, turnoId)).limit(1))[0];
-    if (!turno) return { success: false, error: "Turno no encontrado." };
+    if (!turno) return { success: false, error: "No se encontró el turno de caja." };
 
     const diferencia = efectivoContadoCiego - turno.saldoEfectivoEsperado;
 

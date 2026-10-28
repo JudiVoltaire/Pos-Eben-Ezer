@@ -148,7 +148,8 @@ export function TicketCobroPanel({
         {items.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 text-[#646E82]">
             <Receipt className="w-8 h-8 text-[#323946] stroke-[1.5] mb-2.5" />
-            <p className="text-xs text-[#646E82]">Orden lista para ingreso rápido</p>
+            <p className="text-xs font-semibold text-[#7D8597]">El pedido está vacío</p>
+            <p className="text-[11px] text-[#646E82] mt-0.5">Toca un producto del menú para comenzar</p>
           </div>
         ) : (
           items.map((it, idx) => {
@@ -222,10 +223,10 @@ export function TicketCobroPanel({
         <div className="flex items-baseline justify-between bg-[#1A1D24] border border-[#262B36] px-3.5 py-2.5 rounded-lg shadow-[inset_0_1px_0_0_rgba(255,255,255,0.03)]">
           <div>
             <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block">
-              TOTAL A LIQUIDAR
+              TOTAL A COBRAR
             </span>
             <span className="text-[10px] font-mono text-[#646E82] tabular-nums">
-              Base: {subtotalBase.toFixed(2)} | Extras: {totalExtras.toFixed(2)}
+              Platos: Bs. {subtotalBase.toFixed(2)} · Extras: Bs. {totalExtras.toFixed(2)}
             </span>
           </div>
           <div className="text-2xl font-bold font-mono tabular-nums text-[#E5E9F0]">
@@ -257,7 +258,7 @@ export function TicketCobroPanel({
             }`}
           >
             <QrCode className="w-3.5 h-3.5 mr-1.5 text-[#38BDF8]" strokeWidth={1.75} />
-            <span>QR BANCO</span>
+            <span>BANCO / QR</span>
           </button>
 
           <button
@@ -287,7 +288,7 @@ export function TicketCobroPanel({
                       : "bg-[#1E222B] border-[#2D3340] text-[#C5CBD6] hover:border-[#10B981]/50 hover:bg-[#252A35]"
                   }`}
                 >
-                  {monto === totalFinal ? "Exacto" : `Bs. ${monto}`}
+                  {monto === totalFinal ? "Paga Exacto" : `Bs. ${monto}`}
                 </button>
               ))}
             </div>
@@ -296,7 +297,7 @@ export function TicketCobroPanel({
             <div className="h-11 px-3 rounded-lg bg-[#1A2421] border border-[#10B981]/30 flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-[#34D399] block">
-                  CAMBIO A ENTREGAR
+                  VUELTO A ENTREGAR
                 </span>
                 <span className="text-lg font-bold font-mono tabular-nums text-[#34D399]">
                   Bs. {vuelto.toFixed(2)}
@@ -304,7 +305,7 @@ export function TicketCobroPanel({
               </div>
               <input
                 type="number"
-                placeholder="Otro monto..."
+                placeholder="Monto recibido"
                 value={efectivoRecibidoStr}
                 onChange={(e) => setEfectivoRecibidoStr(e.target.value)}
                 className="w-28 h-8 bg-[#14171D] border border-[#2D3340] text-[#E5E9F0] placeholder-[#646E82] text-xs rounded px-2 text-right font-mono font-semibold focus:outline-none focus:border-[#10B981]/60 tabular-nums"
@@ -320,9 +321,9 @@ export function TicketCobroPanel({
               <QrCode className="w-5 h-5 text-[#38BDF8]" strokeWidth={1.75} />
               <div>
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-[#38BDF8] block">
-                  COBRO POR QR BANCARIO
+                  COBRO POR BANCO / QR
                 </span>
-                <span className="text-xs text-[#7D8597]">Confirmar recepción en cuenta</span>
+                <span className="text-xs text-[#7D8597]">Verificar confirmación en la app del banco</span>
               </div>
             </div>
             <div className="text-base font-bold font-mono tabular-nums text-[#38BDF8]">
@@ -335,7 +336,7 @@ export function TicketCobroPanel({
         {metodoPago === "MIXTO" && (
           <div className="space-y-1.5 bg-[#1A1D24] p-2.5 rounded-lg border border-[#262B36] text-xs">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[#7D8597]">Monto QR:</span>
+              <span className="text-[#7D8597]">Pagado por QR:</span>
               <input
                 type="number"
                 placeholder="Bs."
@@ -345,13 +346,13 @@ export function TicketCobroPanel({
               />
             </div>
             <div className="flex items-center justify-between text-[#7D8597] pt-1 border-t border-[#262B36]">
-              <span>Restante Efectivo:</span>
+              <span>Falta en Efectivo:</span>
               <span className="font-mono tabular-nums font-semibold text-[#E5E9F0]">
                 Bs. {saldoEfectivoRequerido.toFixed(2)}
               </span>
             </div>
             <div className="flex items-center justify-between text-[#34D399]">
-              <span>Vuelto:</span>
+              <span>Vuelto a entregar:</span>
               <span className="font-mono tabular-nums font-bold">
                 Bs. {vuelto.toFixed(2)}
               </span>
@@ -374,14 +375,14 @@ export function TicketCobroPanel({
           {ventaExitosaTick ? (
             <>
               <Check className="w-4 h-4 text-[#0B0F14]" strokeWidth={2.5} />
-              <span>TRANSACCIÓN COMPLETADA</span>
+              <span>¡COBRO REGISTRADO CON ÉXITO!</span>
             </>
           ) : isProcessing ? (
-            <span>PROCESANDO VENTA...</span>
+            <span>REGISTRANDO VENTA...</span>
           ) : (
             <>
               <Check className="w-4 h-4" strokeWidth={2} />
-              <span>COBRAR BS. {totalFinal.toFixed(2)}</span>
+              <span>REGISTRAR COBRO · BS. {totalFinal.toFixed(2)}</span>
             </>
           )}
         </button>
@@ -397,7 +398,7 @@ export function TicketCobroPanel({
               className="text-[#7D8597] hover:text-[#FB7185] flex items-center gap-1 cursor-pointer transition-colors text-[11px]"
             >
               <RotateCcw className="w-3.5 h-3.5 text-[#FB7185]" strokeWidth={1.75} />
-              <span>Anular con PIN Admin</span>
+              <span>Anular venta anterior (PIN)</span>
             </button>
           </div>
         )}

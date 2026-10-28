@@ -71,7 +71,7 @@ export function CierreCajaModal({
           <div className="flex items-center gap-2">
             <Lock className="w-4 h-4 text-[#F59E0B]" strokeWidth={1.75} />
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#E5E9F0]">
-              {reporteZ ? "REPORTE Z — CIERRE OFICIAL DE TURNO" : "ARQUEO CIEGO DE CAJA"}
+              {reporteZ ? "REPORTE OFICIAL Z — CIERRE DE TURNO" : "CIERRE DE CAJA — ARQUEO CIEGO"}
             </h3>
           </div>
           <button
@@ -90,17 +90,17 @@ export function CierreCajaModal({
               <div className="bg-[#1E222B] border border-[#2D3340] rounded-lg p-3 text-xs text-[#E5E9F0]">
                 <div className="font-semibold text-xs text-[#F59E0B] flex items-center gap-1.5 mb-1">
                   <ShieldCheck className="w-4 h-4 text-[#F59E0B]" strokeWidth={1.75} />
-                  <span>Procedimiento de Auditoría Ciega</span>
+                  <span>Conteo Ciego de Efectivo</span>
                 </div>
                 <p className="text-[#7D8597] text-[11px] leading-relaxed">
-                  El sistema oculta el saldo esperado para garantizar máxima integridad. Cuenta los
-                  billetes físicos del cajón e ingresa el monto total exacto.
+                  Por seguridad, el saldo registrado en el sistema no se muestra hasta ingresar el conteo.
+                  Cuenta todo el efectivo físico del cajón e ingresa el monto total.
                 </p>
               </div>
 
               <div>
                 <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block mb-1.5">
-                  EFECTIVO FÍSICO CONTADO EN CAJÓN (BS.)
+                  TOTAL CONTADO EN EL CAJÓN (BS.)
                 </label>
                 <input
                   type="number"
@@ -117,7 +117,7 @@ export function CierreCajaModal({
                 className="w-full h-11 bg-[#10B981] hover:bg-[#059669] disabled:opacity-40 text-[#0B0F14] font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-75 cursor-pointer flex items-center justify-center gap-1.5"
               >
                 <Check className="w-4 h-4 text-[#0B0F14]" strokeWidth={2} />
-                <span>{isClosing ? "Verificando..." : "Confirmar Conteo y Emitir Reporte Z"}</span>
+                <span>{isClosing ? "Verificando..." : "Confirmar Conteo y Ver Reporte Z"}</span>
               </button>
             </div>
           ) : (
@@ -126,7 +126,7 @@ export function CierreCajaModal({
               <div className="bg-[#1E222B] border border-[#2D3340] text-[#E5E9F0] rounded-lg p-3.5 shadow-sm">
                 <div className="text-center pb-2 mb-2 border-b border-dashed border-[#262B36]">
                   <h4 className="font-bold text-xs text-[#E5E9F0]">EBEN EZER POS</h4>
-                  <p className="text-[10px] text-[#7D8597] tracking-wider uppercase">REPORTE Z — CIERRE DIARIO</p>
+                  <p className="text-[10px] text-[#7D8597] tracking-wider uppercase">REPORTE OFICIAL Z — RESUMEN DE TURNO</p>
                   <p className="text-[10px] text-[#646E82] mt-0.5 tabular-nums">
                     Cierre: {new Date(reporteZ.fechaCierre).toLocaleString()}
                   </p>
@@ -139,11 +139,11 @@ export function CierreCajaModal({
                     <span className="font-semibold text-[#E5E9F0]">Bs. {reporteZ.fondoInicialEfectivo.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-[#7D8597]">
-                    <span>Efectivo Esperado en Sistema:</span>
+                    <span>Efectivo Esperado según Sistema:</span>
                     <span className="font-semibold text-[#E5E9F0]">Bs. {reporteZ.saldoEfectivoEsperado.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-bold text-xs text-[#E5E9F0] pt-0.5">
-                    <span>Efectivo Físico Contado:</span>
+                    <span>Efectivo Real Contado:</span>
                     <span className="text-[#34D399]">Bs. {reporteZ.efectivoContadoCiego.toFixed(2)}</span>
                   </div>
 
@@ -175,27 +175,27 @@ export function CierreCajaModal({
                 {/* Resumen Digital QR */}
                 <div className="space-y-1 pb-2 mb-2 border-b border-dashed border-[#262B36] tabular-nums text-[11px]">
                   <div className="flex justify-between text-[#38BDF8]">
-                    <span>Acumulado QR / Banco:</span>
+                    <span>Cobrado por Banco / QR:</span>
                     <span className="font-semibold">Bs. {reporteZ.saldoQrAcumulado.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between font-bold text-[#E5E9F0] pt-1 border-t border-[#262B36]">
-                    <span>TOTAL FACTURADO TURNO:</span>
+                    <span>TOTAL VENDIDO EN EL TURNO:</span>
                     <span>Bs. {reporteZ.totalRecaudadoGeneral.toFixed(2)}</span>
                   </div>
                   <div className="text-[10px] text-[#646E82]">
-                    {reporteZ.totalVentasRealizadas} transacciones registradas
+                    {reporteZ.totalVentasRealizadas} ventas registradas
                   </div>
                 </div>
 
                 {/* Métricas de Inteligencia: Platos vs Extras */}
                 <div className="space-y-0.5 pb-2 mb-2 border-b border-dashed border-[#262B36] text-[11px] tabular-nums">
-                  <div className="text-[#7D8597]">Desglose Comercial:</div>
+                  <div className="text-[#7D8597]">Desglose de Ventas:</div>
                   <div className="flex justify-between text-[#7D8597]">
-                    <span>Platos Base:</span>
+                    <span>Platos del Menú:</span>
                     <span>Bs. {reporteZ.totalPlatosBase.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-[#34D399]">
-                    <span>Toppings y Extras:</span>
+                    <span>Extras y Adicionales:</span>
                     <span>+Bs. {reporteZ.totalExtras.toFixed(2)}</span>
                   </div>
                 </div>
@@ -204,7 +204,7 @@ export function CierreCajaModal({
                 {reporteZ.top5Productos.length > 0 && (
                   <div>
                     <div className="font-semibold text-[#7D8597] mb-1 text-[10px] uppercase tracking-wider">
-                      TOP 5 PRODUCTOS:
+                      LOS 5 PLATOS MÁS VENDIDOS:
                     </div>
                     <div className="space-y-0.5 text-[11px] tabular-nums">
                       {reporteZ.top5Productos.map((p, i) => (
@@ -223,7 +223,7 @@ export function CierreCajaModal({
               {/* Botón de Siguiente Turno */}
               <div className="bg-[#1E222B] p-3 rounded-lg border border-[#2D3340] space-y-2">
                 <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block">
-                  APERTURA DE NUEVO TURNO (FONDO BS.):
+                  FONDO INICIAL PARA EL SIGUIENTE TURNO (BS.):
                 </span>
                 <div className="flex gap-2">
                   <input
@@ -236,7 +236,7 @@ export function CierreCajaModal({
                     onClick={handleNuevoTurno}
                     className="flex-1 h-9 bg-[#10B981] hover:bg-[#059669] text-[#0B0F14] font-bold text-xs uppercase tracking-wider rounded transition-all duration-75 cursor-pointer"
                   >
-                    Iniciar Nuevo Turno
+                    Abrir Nuevo Turno
                   </button>
                 </div>
               </div>

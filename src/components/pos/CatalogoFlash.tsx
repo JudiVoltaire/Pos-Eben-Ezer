@@ -83,12 +83,12 @@ export function CatalogoFlash({
 
   return (
     <div className="flex-1 flex flex-col h-full overflow-hidden bg-[#14171D] select-none border-r border-[#262B36]">
-      {/* 1. SECCIÓN SUPERIOR: FAVORITOS DE ALTA ROTACIÓN */}
+      {/* 1. SECCIÓN SUPERIOR: PLATOS MÁS VENDIDOS */}
       <div className="p-3 bg-[#161920] border-b border-[#262B36] shrink-0">
         <div className="flex items-center gap-1.5 mb-2.5">
           <Zap className="w-3.5 h-3.5 text-[#F59E0B]" strokeWidth={1.75} />
           <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D8597]">
-            FAVORITOS DE ALTA ROTACIÓN
+            MÁS VENDIDOS (ACCESO DIRECTO)
           </span>
         </div>
 
@@ -119,7 +119,7 @@ export function CatalogoFlash({
       {/* 2. PESTAÑAS DE CATEGORÍAS */}
       <div className="px-3.5 py-2 flex items-center gap-2 overflow-x-auto border-b border-[#262B36] bg-[#14171D] no-scrollbar shrink-0">
         <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] mr-1 shrink-0">
-          CATEGORÍAS:
+          MENÚ:
         </span>
         {categorias.map((cat) => {
           const isActiva = cat.id === categoriaActiva;
@@ -129,7 +129,7 @@ export function CatalogoFlash({
               onClick={() => setCategoriaActiva(cat.id)}
               className={`h-8 px-3 rounded-lg border text-xs font-medium transition-all duration-75 whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                 isActiva
-                  ? "bg-[#252A35] border-[#3B4252] text-[#E5E9F0] shadow-sm"
+                  ? "bg-[#252A35] border-[#3B4252] text-[#E5E9F0] shadow-sm font-semibold"
                   : "bg-[#1E222B] border-[#2D3340] text-[#7D8597] hover:text-[#E5E9F0] hover:bg-[#252A35] hover:border-[#3B4252]"
               }`}
             >
@@ -163,7 +163,7 @@ export function CatalogoFlash({
 
                 <div className="w-full flex items-center justify-between pt-1 border-t border-[#262B36]">
                   <span className="text-[10px] text-[#646E82] uppercase tracking-wider">
-                    {cat?.nombre || "Menú"}
+                    {cat?.nombre || "Plato"}
                   </span>
                   <div className="text-sm font-bold font-mono tabular-nums text-[#E5E9F0]">
                     <span className="text-[11px] font-normal text-[#8A94A6] mr-1">Bs.</span>

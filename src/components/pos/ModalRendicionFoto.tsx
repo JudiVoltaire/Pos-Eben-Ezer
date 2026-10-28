@@ -64,10 +64,10 @@ export function ModalRendicionFoto({
           <div className="flex items-center gap-2">
             <Camera className="w-4 h-4 text-[#FB7185]" strokeWidth={1.75} />
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#E5E9F0]">
-              RENDICIÓN FOTOGRÁFICA DE COMPROBANTES
+              FOTOS DE RECIBOS Y COMPROBANTES
             </h3>
             <span className="bg-[rgba(244,63,94,0.12)] text-[#FB7185] text-[10px] font-mono font-bold px-1.5 py-0.2 rounded border border-[rgba(244,63,94,0.3)] tabular-nums">
-              {pendientes.length} pendientes
+              {pendientes.length} por respaldar
             </span>
           </div>
           <button
@@ -94,10 +94,10 @@ export function ModalRendicionFoto({
             <div className="py-12 text-center text-[#646E82]">
               <Check className="w-8 h-8 mx-auto text-[#10B981] mb-2" strokeWidth={1.75} />
               <p className="text-xs font-semibold text-[#E5E9F0]">
-                Sin gastos pendientes de comprobante
+                No hay salidas pendientes de comprobante
               </p>
               <p className="text-[11px] text-[#7D8597] mt-0.5">
-                Todas las compras registradas en el turno cuentan con foto de respaldo.
+                Todas las salidas de dinero cuentan con foto de recibo adjunta.
               </p>
             </div>
           ) : (
@@ -118,8 +118,11 @@ export function ModalRendicionFoto({
                         {mov.motivo}
                       </div>
                       <div className="text-[11px] text-[#7D8597] mt-0.5 tabular-nums">
-                        Bolsillo: <span className="font-medium text-[#C5CBD6]">{mov.bolsillo}</span> ·{" "}
-                        {mov.fechaHora ? new Date(mov.fechaHora).toLocaleTimeString() : ""}
+                        Origen:{" "}
+                        <span className="font-medium text-[#C5CBD6]">
+                          {mov.bolsillo === "EFECTIVO_CAJON" ? "Efectivo en Cajón" : "Banco / QR"}
+                        </span>{" "}
+                        · {mov.fechaHora ? new Date(mov.fechaHora).toLocaleTimeString() : ""}
                       </div>
                       {mov.notaOpcional && (
                         <p className="text-[11px] text-[#7D8597] italic mt-0.5">
@@ -141,7 +144,7 @@ export function ModalRendicionFoto({
                         className="mt-1 h-7 px-2.5 rounded bg-[#1E222B] hover:bg-[#252A35] border border-[#2D3340] text-[#E5E9F0] text-xs font-medium transition-all duration-75 cursor-pointer flex items-center gap-1.5"
                       >
                         <Camera className="w-3 h-3 text-[#F59E0B]" strokeWidth={1.75} />
-                        <span>Foto</span>
+                        <span>Subir Foto</span>
                       </button>
                     </div>
                   </div>
@@ -161,7 +164,7 @@ export function ModalRendicionFoto({
                           onClick={() => setPreview(null)}
                           className="flex-1 h-8 bg-[#1E222B] hover:bg-[#252A35] text-[#C5CBD6] text-xs font-medium rounded border border-[#2D3340] transition-colors"
                         >
-                          Repetir
+                          Cambiar Foto
                         </button>
                         <button
                           disabled={isSaving}
@@ -169,7 +172,7 @@ export function ModalRendicionFoto({
                           className="flex-2 h-8 bg-[#10B981] hover:bg-[#059669] text-[#0B0F14] text-xs font-bold uppercase tracking-wider rounded transition-colors flex items-center justify-center gap-1"
                         >
                           <Check className="w-3.5 h-3.5" strokeWidth={2} />
-                          <span>{isSaving ? "Guardando..." : "Confirmar Respaldo"}</span>
+                          <span>{isSaving ? "Guardando..." : "Guardar Foto"}</span>
                         </button>
                       </div>
                     </div>
@@ -186,7 +189,7 @@ export function ModalRendicionFoto({
             onClick={onClose}
             className="h-8 px-3.5 bg-[#1E222B] hover:bg-[#252A35] text-[#C5CBD6] hover:text-[#E5E9F0] font-medium text-xs rounded-lg border border-[#2D3340] transition-colors cursor-pointer"
           >
-            Cerrar
+            Cerrar Ventana
           </button>
         </div>
       </div>

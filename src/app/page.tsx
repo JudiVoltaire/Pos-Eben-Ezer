@@ -14,16 +14,16 @@ async function PosContainer() {
         <div className="bg-[#161920] border border-[#262B36] p-8 rounded-lg max-w-sm text-center shadow-2xl">
           <AlertTriangle className="w-8 h-8 text-[#F59E0B] mx-auto mb-3" strokeWidth={1.75} />
           <h2 className="text-xs font-semibold uppercase tracking-[0.08em] text-[#E5E9F0] mb-2">
-            INICIALIZACIÓN DEL SISTEMA
+            INICIANDO POS EBEN EZER
           </h2>
           <p className="text-xs text-[#7D8597] mb-4 leading-relaxed">
-            {data.error || "Estableciendo enlace seguro con la base de datos de tesorería."}
+            {data.error || "Conectando con la base de datos de caja..."}
           </p>
           <a
             href="/"
             className="inline-block bg-[#10B981] hover:bg-[#059669] text-[#0B0F14] font-bold px-4 py-2 rounded-lg text-xs uppercase tracking-wider transition-colors cursor-pointer"
           >
-            Reconectar Sistema
+            Reintentar Conexión
           </a>
         </div>
       </div>
@@ -57,7 +57,7 @@ export default function HomePage() {
             EBEN EZER POS
           </div>
           <div className="text-[11px] text-[#7D8597] mt-1 font-mono">
-            Cargando entorno transaccional...
+            Cargando sistema de caja...
           </div>
         </div>
       }

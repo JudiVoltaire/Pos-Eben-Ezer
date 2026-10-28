@@ -35,7 +35,7 @@ export function ModalAnularAdmin({
 
   const handleAnular = async () => {
     if (pinAdmin.length !== 4) {
-      setErrorMessage("Ingresa el PIN de Administrador (4 dígitos)");
+      setErrorMessage("Ingresa los 4 dígitos del PIN de Administrador.");
       return;
     }
 
@@ -47,7 +47,7 @@ export function ModalAnularAdmin({
       setPinAdmin("");
       onClose();
     } else {
-      setErrorMessage("PIN de Administrador incorrecto (ej. Dueña 9999).");
+      setErrorMessage("El PIN de Administrador es incorrecto.");
     }
   };
 
@@ -59,7 +59,7 @@ export function ModalAnularAdmin({
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-4 h-4 text-[#FB7185]" strokeWidth={1.75} />
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#E5E9F0]">
-              ANULAR TICKET #{ultimoTicket.nroTicket}
+              ANULAR VENTA · TICKET #{ultimoTicket.nroTicket}
             </h3>
           </div>
           <button
@@ -74,21 +74,21 @@ export function ModalAnularAdmin({
         <div className="p-4 space-y-3.5">
           <div className="bg-[#1E222B] border border-[#2D3340] border-l-[3px] border-l-[#FB7185] rounded-lg p-3 text-center">
             <p className="text-xs text-[#E5E9F0]">
-              ¿Confirmas la anulación del ticket #{ultimoTicket.nroTicket} por{" "}
+              ¿Deseas anular la venta del ticket #{ultimoTicket.nroTicket} por{" "}
               <strong className="text-[#FB7185] font-bold font-mono tabular-nums">
                 Bs. {ultimoTicket.total.toFixed(2)}
               </strong>
               ?
             </p>
-            <p className="text-[10px] text-[#7D8597] mt-1 font-mono">
-              Revertirá saldos y emitirá registro forense inmediato.
+            <p className="text-[10px] text-[#7D8597] mt-1 font-medium">
+              Esta acción cancelará la venta, restará el dinero de la caja y registrará la anulación.
             </p>
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597]">
-                PIN DE ADMINISTRADOR:
+                PIN DE 4 DÍGITOS DEL ADMINISTRADOR:
               </span>
               <div className="flex gap-2">
                 {[0, 1, 2, 3].map((idx) => (
@@ -134,9 +134,9 @@ export function ModalAnularAdmin({
                 type="button"
                 onClick={handleAnular}
                 disabled={pinAdmin.length !== 4 || isSubmitting}
-                className="h-10 bg-[#FB7185] hover:bg-[#F43F5E] disabled:opacity-40 text-[#0B0F14] font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-75 cursor-pointer flex items-center justify-center"
+                className="h-10 bg-[#FB7185] hover:bg-[#F43F5E] disabled:opacity-40 text-[#0B0F14] font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-75 cursor-pointer flex items-center justify-center px-2"
               >
-                {isSubmitting ? "..." : "Anular"}
+                {isSubmitting ? "..." : "Confirmar Anulación"}
               </button>
             </div>
 

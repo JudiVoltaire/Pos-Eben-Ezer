@@ -21,7 +21,7 @@ export interface RegistrarSalidaInput {
 export async function registrarSalidaDinero(input: RegistrarSalidaInput) {
   try {
     if (input.monto <= 0) {
-      return { success: false, error: "El monto debe ser mayor a cero." };
+      return { success: false, error: "El monto debe ser mayor a 0 Bs." };
     }
 
     let receptorNombre = "Personal";
@@ -33,7 +33,7 @@ export async function registrarSalidaDinero(input: RegistrarSalidaInput) {
       )[0];
 
       if (!receptor || receptor.pin4Digitos !== input.pinReceptor) {
-        return { success: false, error: "PIN de 4 dígitos incorrecto para el usuario seleccionado." };
+        return { success: false, error: "El PIN ingresado no coincide con el receptor seleccionado." };
       }
       receptorNombre = receptor.nombre;
     }
@@ -113,7 +113,7 @@ export async function adjuntarComprobanteFoto(movimientoId: string, fotoBase64: 
       .where(eq(movimientosCaja.id, movimientoId));
 
     revalidatePath("/");
-    return { success: true, message: "Comprobante fotográfico respaldado." };
+    return { success: true, message: "Foto del recibo guardada correctamente." };
   } catch (err: any) {
     return { success: false, error: err.message };
   }

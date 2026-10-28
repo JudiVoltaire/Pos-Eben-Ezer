@@ -63,11 +63,11 @@ export function ModalSalidaDinero({
   const handleSubmit = async () => {
     const monto = parseFloat(montoStr) || 0;
     if (monto <= 0) {
-      setErrorMessage("Ingresa un monto válido en Bolivianos.");
+      setErrorMessage("Ingresa un monto mayor a 0 Bs.");
       return;
     }
     if (pinReceptor.length !== 4) {
-      setErrorMessage("El receptor debe validar su PIN de 4 dígitos.");
+      setErrorMessage("La persona que recibe debe validar su PIN de 4 dígitos.");
       return;
     }
 
@@ -94,7 +94,7 @@ export function ModalSalidaDinero({
       setNotaOpcional("");
       onClose();
     } else {
-      setErrorMessage("PIN incorrecto para el receptor seleccionado.");
+      setErrorMessage("El PIN ingresado no coincide con el receptor seleccionado.");
     }
   };
 
@@ -106,7 +106,7 @@ export function ModalSalidaDinero({
           <div className="flex items-center gap-2">
             <ArrowUpRight className="w-4 h-4 text-[#FB7185]" strokeWidth={1.75} />
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#E5E9F0]">
-              REGISTRO DE SALIDA DE DINERO
+              SALIDA DE DINERO DE CAJA
             </h3>
           </div>
           <button
@@ -122,7 +122,7 @@ export function ModalSalidaDinero({
           {/* Paso 1: Selector Obligatorio de Bolsillo */}
           <div>
             <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block mb-1.5">
-              1. ORIGEN DEL DINERO
+              1. ¿DE DÓNDE SALE EL DINERO?
             </label>
             <div className="grid grid-cols-2 gap-2">
               <button
@@ -135,7 +135,7 @@ export function ModalSalidaDinero({
                 }`}
               >
                 <Banknote className="w-4 h-4 text-[#34D399]" strokeWidth={1.75} />
-                <span>Caja Física (Cajón)</span>
+                <span>Efectivo en Cajón</span>
               </button>
 
               <button
@@ -148,7 +148,7 @@ export function ModalSalidaDinero({
                 }`}
               >
                 <QrCode className="w-4 h-4 text-[#38BDF8]" strokeWidth={1.75} />
-                <span>Transferencia / QR</span>
+                <span>Banco / QR</span>
               </button>
             </div>
           </div>
@@ -156,7 +156,7 @@ export function ModalSalidaDinero({
           {/* Paso 2: Motivo */}
           <div>
             <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block mb-1.5">
-              2. CONCEPTO DE LA OPERACIÓN
+              2. ¿PARA QUÉ ES LA SALIDA?
             </label>
             <div className="grid grid-cols-2 gap-1.5">
               {motivos.map((m, idx) => (
@@ -183,7 +183,7 @@ export function ModalSalidaDinero({
           <div className="grid grid-cols-2 gap-2.5">
             <div>
               <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block mb-1">
-                MONTO EN BS.
+                MONTO A RETIRAR (BS.)
               </label>
               <input
                 type="number"
@@ -196,7 +196,7 @@ export function ModalSalidaDinero({
 
             <div>
               <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block mb-1">
-                RECEPTOR RESPONSABLE
+                ¿QUIÉN RECIBE EL DINERO?
               </label>
               <select
                 value={receptorId}
@@ -214,7 +214,7 @@ export function ModalSalidaDinero({
 
           <div>
             <label className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] block mb-1">
-              OBSERVACIÓN / DETALLE (OPCIONAL)
+              DETALLE U OBSERVACIÓN (OPCIONAL)
             </label>
             <input
               type="text"
@@ -229,7 +229,7 @@ export function ModalSalidaDinero({
           <div className="bg-[#12151A] p-3 rounded-lg border border-[#262B36]">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-[#7D8597]">
-                VALIDACIÓN CON PIN (4 DÍGITOS)
+                PIN DE 4 DÍGITOS DE QUIEN RECIBE
               </span>
               <div className="flex gap-2">
                 {[0, 1, 2, 3].map((idx) => (
@@ -298,7 +298,7 @@ export function ModalSalidaDinero({
             className="flex-2 h-10 bg-[#FB7185] hover:bg-[#F43F5E] disabled:opacity-40 text-[#0B0F14] font-bold text-xs uppercase tracking-wider rounded-lg transition-all duration-75 cursor-pointer flex items-center justify-center gap-1.5"
           >
             <Check className="w-4 h-4 text-[#0B0F14]" strokeWidth={2} />
-            <span>{isSubmitting ? "Registrando..." : "Confirmar Salida"}</span>
+            <span>{isSubmitting ? "Guardando..." : "Guardar Salida de Dinero"}</span>
           </button>
         </div>
       </div>

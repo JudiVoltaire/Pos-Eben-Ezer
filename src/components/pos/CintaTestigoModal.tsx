@@ -79,7 +79,7 @@ export function CintaTestigoModal({
           <div className="flex items-center gap-2">
             <Receipt className="w-4 h-4 text-[#F59E0B]" strokeWidth={1.75} />
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#E5E9F0]">
-              CINTA TESTIGO DIGITAL (AUDITORÍA FORENSE)
+              HISTORIAL DE CAJA Y VENTAS (CINTA TESTIGO)
             </h3>
           </div>
           <div className="flex items-center gap-2">
@@ -88,7 +88,7 @@ export function CintaTestigoModal({
               className="h-8 px-2.5 rounded-md bg-[#1E222B] border border-[#2D3340] hover:bg-[#252A35] text-[#E5E9F0] font-medium text-xs transition-all duration-75 flex items-center gap-1.5 cursor-pointer"
             >
               <Download className="w-3.5 h-3.5 text-[#34D399]" strokeWidth={1.75} />
-              <span>Exportar CSV</span>
+              <span>Descargar Reporte (CSV)</span>
             </button>
             <button
               onClick={onClose}
@@ -162,13 +162,13 @@ export function CintaTestigoModal({
                             : "bg-[#252B37] text-[#F59E0B] border border-[#363E4F]"
                         }`}
                       >
-                        [{v.metodoPago}]
+                        {v.metodoPago === "EFECTIVO" ? "[EFECTIVO]" : v.metodoPago === "QR" ? "[BANCO / QR]" : "[MIXTO]"}
                       </span>
                     </div>
 
                     <div className="text-[11px] text-[#7D8597] mb-2 flex justify-between tabular-nums">
                       <span>Hora: {v.fechaHora ? new Date(v.fechaHora).toLocaleTimeString() : ""}</span>
-                      <span>Operador: {v.cajeraNombre || "Laura"}</span>
+                      <span>Cajero/a: {v.cajeraNombre || "Caja"}</span>
                     </div>
 
                     <div className="space-y-1 my-2">
@@ -201,7 +201,7 @@ export function CintaTestigoModal({
 
                     {v.metodoPago === "EFECTIVO" && (
                       <div className="text-[10px] text-[#7D8597] flex justify-between mt-1 tabular-nums pt-1 border-t border-[#262B36]/60">
-                        <span>Recibido: Bs. {v.efectivoRecibido?.toFixed(2)}</span>
+                        <span>Entregó: Bs. {v.efectivoRecibido?.toFixed(2)}</span>
                         <span className="text-[#34D399]">
                           Vuelto: Bs. {v.vueltoEntregado?.toFixed(2)}
                         </span>
@@ -222,11 +222,11 @@ export function CintaTestigoModal({
                         <div className="font-semibold text-[#E5E9F0] text-xs flex items-center gap-2">
                           <span>{m.tipo === "INGRESO_CAMBIO" ? "INGRESO" : "SALIDA"}: {m.motivo}</span>
                           <span className="bg-[rgba(244,63,94,0.12)] text-[#FB7185] border border-[rgba(244,63,94,0.25)] px-1.5 py-0.2 rounded text-[10px]">
-                            [SALIDA FIRMADA PIN]
+                            [AUTORIZADO CON PIN]
                           </span>
                         </div>
                         <div className="text-[11px] text-[#7D8597] mt-1 tabular-nums">
-                          Bolsillo: {m.bolsillo} · Receptor: {m.receptorNombre || "Personal"} ·{" "}
+                          Origen: {m.bolsillo === "EFECTIVO_CAJON" ? "Efectivo en Cajón" : "Banco / QR"} · Recibió: {m.receptorNombre || "Personal"} ·{" "}
                           {m.fechaHora ? new Date(m.fechaHora).toLocaleTimeString() : ""}
                         </div>
                         {m.notaOpcional && (
@@ -242,7 +242,11 @@ export function CintaTestigoModal({
                         - Bs. {m.monto.toFixed(2)}
                       </div>
                       <span className="text-[10px] text-[#646E82] block mt-0.5">
-                        {m.estadoRendicion}
+                        {m.estadoRendicion === "PENDIENTE_COMPROBANTE"
+                          ? "Falta Foto Recibo"
+                          : m.estadoRendicion === "RESPALDADO"
+                          ? "Foto Adjunta"
+                          : "Sin comprobante"}
                       </span>
                     </div>
                   </div>
@@ -258,7 +262,7 @@ export function CintaTestigoModal({
             onClick={onClose}
             className="h-8 px-3.5 bg-[#1E222B] hover:bg-[#252A35] text-[#C5CBD6] hover:text-[#E5E9F0] font-medium text-xs rounded-lg border border-[#2D3340] transition-all duration-75 cursor-pointer"
           >
-            Cerrar Cinta
+            Cerrar Historial
           </button>
         </div>
       </div>

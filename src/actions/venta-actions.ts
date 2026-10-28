@@ -29,7 +29,7 @@ export interface RegistrarVentaPayload {
 export async function registrarVentaFlash(payload: RegistrarVentaPayload) {
   try {
     if (!payload.items || payload.items.length === 0) {
-      return { success: false, error: "El ticket no contiene ningún ítem." };
+      return { success: false, error: "El ticket está vacío." };
     }
 
     // 1. REGLA DE SEGURIDAD ESTRICTA:
@@ -50,7 +50,7 @@ export async function registrarVentaFlash(payload: RegistrarVentaPayload) {
       if (it.precioBase < prodOriginal.precioBase) {
         return {
           success: false,
-          error: `Violación de seguridad: El precio base de ${it.nombre} no puede ser menor a Bs. ${prodOriginal.precioBase}.`,
+          error: `El precio base de ${it.nombre} no puede ser menor a Bs. ${prodOriginal.precioBase}.`,
         };
       }
 
@@ -66,7 +66,7 @@ export async function registrarVentaFlash(payload: RegistrarVentaPayload) {
 
       for (const el of it.extrasLibres) {
         if (el.monto <= 0) {
-          return { success: false, error: "El comodín de cocina debe ser un monto positivo." };
+          return { success: false, error: "El extra libre de cocina debe ser un monto mayor a 0 Bs." };
         }
         totalExtrasCalculado += el.monto;
       }
@@ -155,11 +155,11 @@ export async function anularVenta(ventaId: string, pinAdmin: string) {
       .where(and(eq(usuarios.rol, "ADMIN"), eq(usuarios.pin4Digitos, pinAdmin)));
 
     if (adminValido.length === 0 && pinAdmin !== "9999") {
-      return { success: false, error: "PIN de Administrador inválido." };
+      return { success: false, error: "El PIN de Administrador es incorrecto." };
     }
 
     const venta = (await db.select().from(ventas).where(eq(ventas.id, ventaId)).limit(1))[0];
-    if (!venta) return { success: false, error: "Venta no encontrada." };
+    if (!venta) return { success: false, error: "No se encontró la venta especificada." };
 
     await client.execute({
       sql: `UPDATE turnos_caja 
@@ -177,7 +177,7 @@ export async function anularVenta(ventaId: string, pinAdmin: string) {
     });
 
     revalidatePath("/");
-    return { success: true, message: `Venta #${venta.nroTicket} anulada exitosamente.` };
+    return { success: true, message: `Venta #${venta.nroTicket} anulada correctamente.` };
   } catch (err: any) {
     return { success: false, error: err.message };
   }

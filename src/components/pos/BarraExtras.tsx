@@ -49,16 +49,16 @@ export function BarraExtras({
           <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D8597]">
             {selectedItemNombre ? (
               <>
-                APLICANDO ADICIONAL A:{" "}
+                AGREGANDO EXTRA A:{" "}
                 <span className="text-[#34D399] normal-case font-bold">{selectedItemNombre}</span>
               </>
             ) : (
-              "ADICIONALES DE ORDEN"
+              "SELECCIONA UN PRODUCTO PARA AÑADIR EXTRAS"
             )}
           </span>
         </div>
-        <span className="text-[10px] text-[#646E82] font-mono">
-          INCREMENTAL · INMUTABLE
+        <span className="text-[10px] text-[#7D8597] font-mono font-medium">
+          SOLO SUMAS AL PLATO
         </span>
       </div>
 
@@ -82,7 +82,7 @@ export function BarraExtras({
       <div className="pt-1.5 border-t border-[#262B36] flex flex-wrap items-center gap-2">
         <div className="flex items-center gap-1 text-[11px] font-semibold uppercase tracking-[0.08em] text-[#7D8597] shrink-0">
           <Sparkles className="w-3.5 h-3.5 text-[#F59E0B]" strokeWidth={1.75} />
-          <span>COMODÍN:</span>
+          <span>EXTRA LIBRE (COCINA):</span>
         </div>
 
         {/* Grupo de sumas rápidas */}
@@ -102,7 +102,7 @@ export function BarraExtras({
         <div className="flex-1 flex items-center gap-1.5 min-w-[220px]">
           <input
             type="text"
-            placeholder="Nota: ej. Extra Palta / Ahogado..."
+            placeholder="Nota rápida: ej. Extra presa, salsa..."
             value={notaLibre}
             onChange={(e) => setNotaLibre(e.target.value)}
             className="h-8 bg-[#12151A] border border-[#2D3340] rounded-md px-2.5 text-xs text-[#E5E9F0] placeholder-[#646E82] flex-1 focus:outline-none focus:border-[#3B4252] transition-colors"
@@ -119,7 +119,7 @@ export function BarraExtras({
             onClick={() => handleSumar(parseFloat(montoCustom) || 0)}
             className="h-8 px-3 rounded-md bg-[#1E222B] border border-[#2D3340] hover:border-[#F59E0B]/60 text-xs font-semibold text-[#F59E0B] hover:bg-[#252A35] active:translate-y-[1px] transition-all duration-75 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Sumar
+            + Sumar
           </button>
         </div>
       </div>
